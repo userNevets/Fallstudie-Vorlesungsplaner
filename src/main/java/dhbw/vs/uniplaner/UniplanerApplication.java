@@ -24,16 +24,19 @@ public class UniplanerApplication implements CommandLineRunner {
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		Course course = new Course();
-		course.setCourseName("WWI2022H");
-		course.setStartingYear(2022L);
-		course = courseRepository.save(course);
-		System.out.println("course="+ course.toString());
-		Lecture lecture = new Lecture();
-		lecture.setLectureName("Einführung");
-		lecture.setDuration(53L);
-		lecture =lectureRepository.save(lecture);
-		System.out.println("lecture="+ lecture.toString());
+		// Course course = new Course();
+		// course.setCourseName("WWI2022H");
+		// course.setStartingYear(2022L);
+		// course = courseRepository.save(course);
+		// System.out.println("course="+ course.toString());
+		// Lecture lecture = new Lecture();
+		// lecture.setLectureName("Einführung");
+		// lecture.setDuration(53L);
+		// lecture =lectureRepository.save(lecture);
+		// System.out.println("lecture="+ lecture.toString());
+
+		String x = "this server is working";
+		System.out.println(x);
 
 
 
