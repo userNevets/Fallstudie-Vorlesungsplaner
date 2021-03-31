@@ -24,6 +24,10 @@ public class Course implements Serializable {
     private String courseName;
     private LocalDate startDate;
     private LocalDate endDate;
+    
+    @ManyToOne
+    @JoinColumn(name = "deg_id", nullable = false)
+    private DegreeProgram degreeProgram;
 
     public Course(){}
 

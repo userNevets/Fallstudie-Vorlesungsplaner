@@ -17,8 +17,66 @@ public class DegreeProgram implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long deg_id;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "short_name")
+    private String shortName;
+
+    @OneToMany(mappedBy = "degreeProgram")
+    private Set<Course> courses;
+
+    protected DegreeProgram() {}
+
+    public DegreeProgram(String name, String shortName, Set<Course> courses) {
+        this.name = name;
+        this.shortName = shortName;
+        //this.courses = courses;
+    }
+
+    public Long getDeg_id() {
+        return this.deg_id;
+    }
+
+    public void setDeg_id(Long deg_id) {
+        this.deg_id = deg_id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getShortName() {
+        return this.shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    // public Set<Course> getCourses() {
+    //     return this.courses;
+    // }
+
+    // public DegreeProgram addCourse(Course course) {
+    //     this.courses.add(course);
+    //     return this;
+    // }
+
+    // public DegreeProgram removeCourse(Course course) {
+    //     this.courses.remove(course);
+    //     return this;
+    // }
+
+    // public void setCourses(Set<Course> courses) {
+    //     this.courses = courses;
+    // }
 
     @Override
     public boolean equals(Object o) {
@@ -28,7 +86,7 @@ public class DegreeProgram implements Serializable {
         if (!(o instanceof DegreeProgram)) {
             return false;
         }
-        return id != null && id.equals(((DegreeProgram) o).id);
+        return deg_id != null && deg_id.equals(((DegreeProgram) o).deg_id);
     }
 
     @Override
@@ -40,7 +98,7 @@ public class DegreeProgram implements Serializable {
     @Override
     public String toString() {
         return "DegreeProgram{" +
-            "id=" + getId() +
+            "id=" + getDeg_id() +
             ", name='" + getName() + "'" +
             ", shortName='" + getShortName() + "'" +
             "}";
