@@ -77,7 +77,7 @@ public class Lecture implements Serializable {
     }
     
     public Lecture moduleName(String moduleName){
-        this.moduleName = moduleName;
+        this.modulName = moduleName;
         return this;
     }
     
