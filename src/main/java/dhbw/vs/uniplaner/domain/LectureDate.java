@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * Die Klasse stellt einen Vorlesungstermin dar.
@@ -32,7 +33,7 @@ public class LectureDate implements Serializable {
     
     @ManyToMany
     @JoinColumn(name = "lastName", nullable = false)
-    private Lecturer lecturer;
+    private Set<Lecturer> lecturer;
     
     public Long getId() {
         return id;

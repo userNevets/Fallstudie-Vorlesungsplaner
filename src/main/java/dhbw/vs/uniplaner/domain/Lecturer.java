@@ -29,7 +29,7 @@ public class Lecturer implements Serializable {
     @Column(name = "email")
     private String email;
     
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name ="last name", nullable = false)
     private Set <Lecture> lecture1;
     
