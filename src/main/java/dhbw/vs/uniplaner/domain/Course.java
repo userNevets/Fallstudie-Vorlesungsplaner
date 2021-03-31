@@ -21,22 +21,36 @@ public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(name = "course name")
     private String courseName;
+    @Column(name = "start date")
     private LocalDate startDate;
+    @Column(name = "end date")
     private LocalDate endDate;
     
     @ManyToOne
     @JoinColumn(name = "deg_id", nullable = false)
     private DegreeProgram degreeProgram;
-
-    public Course(){}
+    
+    
+    @OneToMany(mappedBy = "course1")
+    private Set<Lecture> lectures;
+    
+    @OneToMany(mappedBy = "course2")
+    private Set<Semester> semesters;
+    
+    /*
+    public Course(){
+    
+    }
 
     public Course(String courseName, LocalDate startDate, LocalDate endDate) {
         this.courseName = courseName;
         this.startDate = startDate;
         this.endDate = endDate;
     }
-
+*/
 
     public Long getId() {
         return this.id;
@@ -70,7 +84,10 @@ public class Course implements Serializable {
         this.endDate = endDate;
     }
 
-
+public Course courseName(String courseName){
+    this.courseName = courseName;
+    return this;
+}
 
 
 

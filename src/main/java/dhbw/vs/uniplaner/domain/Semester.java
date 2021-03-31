@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * Die Klasse dient dazu, Informationen über Semester (z.B. Start, Endzeitpunkt, etc.) abzubilden.
@@ -33,6 +34,10 @@ public class Semester implements Serializable {
     
     @Column(name = "name")
     private String name;
+    
+    @OneToMany
+    @JoinColumn(name ="course name", nullable = false)
+    private Set<Semester> course2;
     
     public Long getId() {
         return id;

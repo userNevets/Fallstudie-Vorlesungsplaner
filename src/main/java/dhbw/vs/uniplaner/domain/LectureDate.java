@@ -19,7 +19,54 @@ public class LectureDate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    @Column(name = "start date")
+    private LocalDateTime startDate;
+    
+    @Column(name = "end date")
+    private LocalDateTime endDate;
+    
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private Lecture lecture2;
+    
+    @ManyToMany
+    @JoinColumn(name = "lastName", nullable = false)
+    private Lecturer lecturer;
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+    
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+    
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+    
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+    
+    public LectureDate startDate(LocalDateTime startDate){
+        this.startDate = startDate;
+        return this;
+    }
+    
+    public LectureDate endDate(LocalDateTime endDate){
+        this.endDate = endDate;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {

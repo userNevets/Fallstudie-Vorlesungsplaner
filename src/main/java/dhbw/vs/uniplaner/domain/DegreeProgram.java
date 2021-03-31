@@ -27,15 +27,19 @@ public class DegreeProgram implements Serializable {
 
     @OneToMany(mappedBy = "degreeProgram")
     private Set<Course> courses;
-
-    protected DegreeProgram() {}
+    
+    /*
+    protected DegreeProgram() {
+    
+    }
 
     public DegreeProgram(String name, String shortName, Set<Course> courses) {
         this.name = name;
         this.shortName = shortName;
         //this.courses = courses;
     }
-
+    */
+    
     public Long getDeg_id() {
         return this.deg_id;
     }
@@ -59,24 +63,34 @@ public class DegreeProgram implements Serializable {
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }
+    
+    public DegreeProgram name(String name){
+        this.name = name;
+        return this;
+    }
+    
+    public DegreeProgram shortName(String shortName){
+        this.shortName = shortName;
+        return this;
+    }
 
-    // public Set<Course> getCourses() {
-    //     return this.courses;
-    // }
+     public Set<Course> getCourses() {
+         return this.courses;
+     }
 
-    // public DegreeProgram addCourse(Course course) {
-    //     this.courses.add(course);
-    //     return this;
-    // }
+     public DegreeProgram addCourse(Course course) {
+         this.courses.add(course);
+         return this;
+     }
 
-    // public DegreeProgram removeCourse(Course course) {
-    //     this.courses.remove(course);
-    //     return this;
-    // }
+     public DegreeProgram removeCourse(Course course) {
+         this.courses.remove(course);
+         return this;
+     }
 
-    // public void setCourses(Set<Course> courses) {
-    //     this.courses = courses;
-    // }
+     public void setCourses(Set<Course> courses) {
+         this.courses = courses;
+     }
 
     @Override
     public boolean equals(Object o) {

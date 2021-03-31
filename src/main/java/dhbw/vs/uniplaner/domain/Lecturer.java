@@ -19,8 +19,70 @@ public class Lecturer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
+    
+    @Column(name = "first_name")
+    private String firstName;
+    
+    @Column(name = "last_name")
+    private String lastName;
+    
+    @Column(name = "email")
+    private String email;
+    
+    @OneToMany
+    @JoinColumn(name ="last name", nullable = false)
+    private Set <Lecture> lecture1;
+    
+    @ManyToMany(mappedBy = "lecturer")
+    private Set<LectureDate> lectureDate;
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getFirstName() {
+        return firstName;
+    }
+    
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    
+    public String getLastName() {
+        return lastName;
+    }
+    
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public Lecturer firstName (String firstName){
+        this.firstName = firstName;
+        return this;
+    }
+    
+    public Lecturer lastName (String lastName){
+        this.lastName = lastName;
+        return this;
+    }
+    
+    public Lecturer email (String email){
+        this.email = email;
+        return this;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -31,7 +93,7 @@ public class Lecturer implements Serializable {
         }
         return id != null && id.equals(((Lecturer) o).id);
     }
-
+    
     @Override
     public int hashCode() {
         return 31;
