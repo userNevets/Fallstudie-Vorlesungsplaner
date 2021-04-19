@@ -24,7 +24,7 @@ public class CourseController {
 
     private final Logger log = LoggerFactory.getLogger(CourseController.class);
 
-    CourseService courseService;
+    private CourseService courseService;
 
     @Autowired
     public CourseController(CourseService courseService) {
@@ -34,7 +34,7 @@ public class CourseController {
 
     @PostMapping("/courses")
     public ResponseEntity<Course> createCourse(@RequestBody Course course) throws BadRequestException, URISyntaxException {
-        courseService.save(course);
+        this.courseService.save(course);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -52,8 +52,9 @@ public class CourseController {
         ResponseEntity<Course> response = null;
 
         Optional<Course> tempCourse  = courseService.findOne(course.getId());
+        return null;
 
-        
+
     }
 
     @PutMapping("/courses/{id}")
@@ -90,8 +91,8 @@ public class CourseController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else {
-            return new ResponseEntity<>(HttpStatus.OK);
-            //Hier fehlt als der Body, der mit dem Status übergegeben werden muss
+            return new ResponseEntity<>(course.get(), HttpStatus.OK);
+            //Hier fehlt der Body, der mit dem Status übergegeben werden muss
         }
     }
         /**
@@ -102,8 +103,8 @@ public class CourseController {
          */
         @DeleteMapping("/courses/{id}")
         public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
-            courseService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            this.courseService.delete(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
 

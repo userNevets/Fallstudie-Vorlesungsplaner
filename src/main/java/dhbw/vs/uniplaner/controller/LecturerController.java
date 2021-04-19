@@ -8,6 +8,8 @@ import dhbw.vs.uniplaner.exception.ResourceNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -22,9 +24,18 @@ public class LecturerController {
 
     private final Logger log = LoggerFactory.getLogger(LecturerController.class);
 
+    private LecturerService lecturerService;
+
+    @Autowired
+    public LecturerController (LecturerService lecturerService) {
+        this.lecturerService = lecturerService;
+    }
+
 
     @PostMapping("/lecturers")
     public ResponseEntity<Lecturer> createLecturer(@RequestBody Lecturer lecturer) throws BadRequestException, URISyntaxException {
+        this.lecturerService.save(lecturer);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -38,11 +49,17 @@ public class LecturerController {
      */
     @PutMapping("/lecturers")
     public ResponseEntity<Lecturer> updateLecturer(@RequestBody Lecturer lecturer) throws  BadRequestException {
+        return null;
     }
 
     @PutMapping("/lecturers/{id}")
     public ResponseEntity<Lecturer> updateLecturer(@PathVariable(value = "id") Long id,@Valid @RequestBody Lecturer lecturerDetails) throws ResourceNotFoundException {
+        Optional<Lecturer> tempLecturer = this.lecturerService.findOne(id);
+        tempLecturer.get().setEmail(lecturerDetails.getEmail());
+        tempLecturer.get().setFirstName(lecturerDetails.getFirstName());
+        tempLecturer.get().setLastName(lecturerDetails.getLastName());
 
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -52,7 +69,7 @@ public class LecturerController {
      */
     @GetMapping("/lecturers")
     public List<Lecturer> getAlllecturers() {
-
+        return this.lecturerService.findAll();
     }
 
     /**
@@ -63,7 +80,15 @@ public class LecturerController {
      */
     @GetMapping("/lecturers/{id}")
     public ResponseEntity<Lecturer> getLecturer(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<Lecturer> lecturer = this.lecturerService.findOne(id);
 
+        if (lecturer.get().getId().equals(null)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            return new ResponseEntity<>(lecturer.get(), HttpStatus.OK);
+            // Versuch den Body hinzuzufügen, muss noch mit einer stabilen internetverbindung getestet werden
+        }
     }
         /**
          * {@code DELETE  /lecturers/:id} : delete the "id" lecturer.
@@ -73,7 +98,8 @@ public class LecturerController {
          */
         @DeleteMapping("/lecturers/{id}")
         public ResponseEntity<Void> deleteLecturer(@PathVariable Long id) {
-
+            this.lecturerService.delete(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
 

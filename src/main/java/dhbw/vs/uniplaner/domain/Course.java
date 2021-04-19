@@ -24,9 +24,37 @@ public class Course implements Serializable {
     private String courseName;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    @OneToMany()
+    @JoinTable(
+        name = "course_lectures",
+        joinColumns = @JoinColumn(
+            name = "course_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "lecture_id",
+            referencedColumnName = "lecture_id"
+        )
+    )
+    Set<Lecture> lectures = new HashSet<>();
     
-    @ManyToOne
-    @JoinColumn(name = "deg_id", nullable = false)
+    @OneToMany()
+    @JoinTable(
+        name = "course_semester",
+        joinColumns = @JoinColumn(
+            name = "course_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "semester_id",
+            referencedColumnName = "id"
+        )
+    )
+    Set<Semester> semesters = new HashSet<>();
+    
+    // @ManyToOne
+    // @JoinColumn(name = "id", nullable = false)
     private DegreeProgram degreeProgram;
 
     public Course(){}
@@ -42,8 +70,8 @@ public class Course implements Serializable {
         return this.id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long course_id) {
+        this.id = course_id;
     }
 
     public String getCourseName() {
@@ -70,8 +98,29 @@ public class Course implements Serializable {
         this.endDate = endDate;
     }
 
+    public Set<Lecture> getLectures() {
+        return this.lectures;
+    }
 
+    public void setLectures(Set<Lecture> lectures) {
+        this.lectures = lectures;
+    }
 
+    public Set<Semester> getSemesters() {
+        return this.semesters;
+    }
+
+    public void setSemesters(Set<Semester> semesters) {
+        this.semesters = semesters;
+    }
+
+    public DegreeProgram getDegreeProgram() {
+        return this.degreeProgram;
+    }
+
+    public void setDegreeProgram(DegreeProgram degreeProgram) {
+        this.degreeProgram = degreeProgram;
+    }
 
 
     @Override

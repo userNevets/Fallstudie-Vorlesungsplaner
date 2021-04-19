@@ -8,8 +8,12 @@ import dhbw.vs.uniplaner.exception.ResourceNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,10 +26,17 @@ public class LectureController {
 
     private final Logger log = LoggerFactory.getLogger(LectureController.class);
 
+    private LectureService lectureService;
+
+    @Autowired
+    public LectureController(LectureService lectureService) {
+        this.lectureService = lectureService;
+    }
 
     @PostMapping("/lectures")
     public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture) throws BadRequestException, URISyntaxException {
-
+        this.lectureService.save(lecture);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -39,12 +50,19 @@ public class LectureController {
      */
     @PutMapping("/lectures")
     public ResponseEntity<Lecture> updateLecture(@RequestBody Lecture lecture) throws  BadRequestException {
-
+        return null;
     }
 
     @PutMapping("/lectures/{id}")
     public ResponseEntity<Lecture> updateLecture(@PathVariable(value = "id") Long id,@Valid @RequestBody Lecture lectureDetails) throws ResourceNotFoundException {
+        Optional<Lecture> tempLecture = lectureService.findOne(id);
+        tempLecture.get().setLecture_id(lectureDetails.getLecture_id());
+        tempLecture.get().setLectureName(lectureDetails.getLectureName());
+        tempLecture.get().setCourse(lectureDetails.getCourse());
+        tempLecture.get().setDuration(lectureDetails.getDuration());
+        tempLecture.get().setModulName(lectureDetails.getModulName());
 
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -54,7 +72,7 @@ public class LectureController {
      */
     @GetMapping("/lectures")
     public List<Lecture> getAlllectures() {
-
+        return this.lectureService.findAll();
     }
 
     /**
@@ -65,18 +83,28 @@ public class LectureController {
      */
     @GetMapping("/lectures/{id}")
     public ResponseEntity<Lecture> getLecture(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<Lecture> lecture = this.lectureService.findOne(id);
 
-    }
-        /**
-         * {@code DELETE  /lectures/:id} : delete the "id" lecture.
-         *
-         * @param id the id of the lecture to delete.
-         * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-         */
-        @DeleteMapping("/lectures/{id}")
-        public ResponseEntity<Void> deleteLecture(@PathVariable Long id) {
-
+        if (lecture.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        else {
+            return new ResponseEntity<>(HttpStatus.OK);
+            //Hier fehlt der Body, der mit dem Status übergeben wird
+        }
+    }
+        
+    /**
+    * {@code DELETE  /lectures/:id} : delete the "id" lecture.
+    *
+    * @param id the id of the lecture to delete.
+    * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+    */
+    @DeleteMapping("/lectures/{id}")
+    public ResponseEntity<Void> deleteLecture(@PathVariable Long id) {
+        this.lectureService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 
 

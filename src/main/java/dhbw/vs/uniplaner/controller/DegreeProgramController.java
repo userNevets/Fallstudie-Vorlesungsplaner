@@ -8,6 +8,8 @@ import dhbw.vs.uniplaner.exception.ResourceNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -22,10 +24,18 @@ public class DegreeProgramController {
 
     private final Logger log = LoggerFactory.getLogger(DegreeProgramController.class);
 
+    private DegreeProgramService dpServive;
+
+    @Autowired
+    public DegreeProgramController(DegreeProgramService deg_service) {
+        this.dpServive = deg_service;
+    }
+
 
     @PostMapping("/degreeprograms")
     public ResponseEntity<DegreeProgram> createDegreeProgram(@RequestBody DegreeProgram degreeprogram) throws BadRequestException, URISyntaxException {
-
+        this.dpServive.save(degreeprogram);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -39,12 +49,17 @@ public class DegreeProgramController {
      */
     @PutMapping("/degreeprograms")
     public ResponseEntity<DegreeProgram> updateDegreeProgram(@RequestBody DegreeProgram degreeprogram) throws  BadRequestException {
-
+        return null;
     }
 
     @PutMapping("/degreeprograms/{id}")
     public ResponseEntity<DegreeProgram> updateDegreeProgram(@PathVariable(value = "id") Long id,@Valid @RequestBody DegreeProgram degreeprogramDetails) throws ResourceNotFoundException {
+        Optional<DegreeProgram> tempDegreeProgram = this.dpServive.findOne(id);
+        tempDegreeProgram.get().setName(degreeprogramDetails.getName());
+        tempDegreeProgram.get().setShortName(degreeprogramDetails.getShortName());
+        tempDegreeProgram.get().setDeg_id(degreeprogramDetails.getDeg_id());
 
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -54,6 +69,7 @@ public class DegreeProgramController {
      */
     @GetMapping("/degreeprograms")
     public List<DegreeProgram> getAlldegreeprograms() {
+        return this.dpServive.findAll();
     }
 
     /**
@@ -64,7 +80,16 @@ public class DegreeProgramController {
      */
     @GetMapping("/degreeprograms/{id}")
     public ResponseEntity<DegreeProgram> getDegreeProgram(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<DegreeProgram> degreeProgram = this.dpServive.findOne(id);
 
+        if (degreeProgram.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            return new ResponseEntity<DegreeProgram>(HttpStatus.OK);
+            //Hier fehlt als der Body, der mit dem Status übergegeben werden muss
+
+        }
     }
         /**
          * {@code DELETE  /degreeprograms/:id} : delete the "id" degreeprogram.
@@ -74,6 +99,8 @@ public class DegreeProgramController {
          */
         @DeleteMapping("/degreeprograms/{id}")
         public ResponseEntity<Void> deleteDegreeProgram(@PathVariable Long id) {
+            dpServive.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
 

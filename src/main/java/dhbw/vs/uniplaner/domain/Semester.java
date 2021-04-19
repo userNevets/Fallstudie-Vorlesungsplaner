@@ -19,6 +19,72 @@ public class Semester implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer number;
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    private Long semesterNumber;
+    private String name;
+    private Course course;
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getNumber() {
+        return this.number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public LocalDate getStartDate() {
+        return this.startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return this.endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public Long getSemesterNumber() {
+        return this.semesterNumber;
+    }
+
+    public void setSemesterNumber(Long semesterNumber) {
+        this.semesterNumber = semesterNumber;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Course getCourse() {
+        return this.course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

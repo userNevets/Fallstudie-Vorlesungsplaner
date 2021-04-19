@@ -8,6 +8,8 @@ import dhbw.vs.uniplaner.exception.ResourceNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -22,10 +24,18 @@ public class LectureDateController {
 
     private final Logger log = LoggerFactory.getLogger(LectureDateController.class);
 
+    private LectureDateService ldService;
+
+    @Autowired
+    public LectureDateController(LectureDateService ldService) {
+        this.ldService = ldService;
+    }
+
 
     @PostMapping("/lecturedates")
     public ResponseEntity<LectureDate> createLectureDate(@RequestBody LectureDate lecturedate) throws BadRequestException, URISyntaxException {
-
+        this.ldService.save(lecturedate);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -39,12 +49,19 @@ public class LectureDateController {
      */
     @PutMapping("/lecturedates")
     public ResponseEntity<LectureDate> updateLectureDate(@RequestBody LectureDate lecturedate) throws  BadRequestException {
-
+        return null;
     }
 
     @PutMapping("/lecturedates/{id}")
     public ResponseEntity<LectureDate> updateLectureDate(@PathVariable(value = "id") Long id,@Valid @RequestBody LectureDate lecturedateDetails) throws ResourceNotFoundException {
+        Optional<LectureDate> tempLectureDate = this.ldService.findOne(id);
+        tempLectureDate.get().setLecture(lecturedateDetails.getLecture());
+        tempLectureDate.get().setStartDate(lecturedateDetails.getStartDate());
+        tempLectureDate.get().setEndDate(lecturedateDetails.getEndDate());
+        tempLectureDate.get().setLecturer(lecturedateDetails.getLecturer());
+        tempLectureDate.get().setLecture(lecturedateDetails.getLecture());
 
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -54,7 +71,7 @@ public class LectureDateController {
      */
     @GetMapping("/lecturedates")
     public List<LectureDate> getAlllecturedates() {
-
+        return this.ldService.findAll();
     }
 
     /**
@@ -65,7 +82,15 @@ public class LectureDateController {
      */
     @GetMapping("/lecturedates/{id}")
     public ResponseEntity<LectureDate> getLectureDate(@PathVariable Long id) throws ResourceNotFoundException {
+        Optional<LectureDate> lectureDate = this.ldService.findOne(id);
 
+        if (lectureDate.get().getId().equals(null)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            return new ResponseEntity<>(lectureDate.get(), HttpStatus.OK);
+            // Versuch den Body hinzuzufügen, muss noch mit einer stabilen internetverbindung getestet werden
+        }
     }
         /**
          * {@code DELETE  /lecturedates/:id} : delete the "id" lecturedate.
@@ -75,7 +100,8 @@ public class LectureDateController {
          */
         @DeleteMapping("/lecturedates/{id}")
         public ResponseEntity<Void> deleteLectureDate(@PathVariable Long id) {
-
+            this.ldService.delete(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
 

@@ -20,6 +20,61 @@ public class LectureDate implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
+    private Lecturer lecturer;
+    private Lecture Lecture;
+
+    protected LectureDate() {}
+
+    public LectureDate(LocalDateTime startDate, LocalDateTime endDate, Lecturer lecturer, Lecture lecture) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.lecturer = lecturer;
+        this.Lecture = lecture;
+    }
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getStartDate() {
+        return this.startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return this.endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public Lecturer getLecturer() {
+        return this.lecturer;
+    }
+
+    public void setLecturer(Lecturer lecturer) {
+        this.lecturer = lecturer;
+    }
+
+    public Lecture getLecture() {
+        return this.Lecture;
+    }
+
+    public void setLecture(Lecture Lecture) {
+        this.Lecture = Lecture;
+    }
 
     @Override
     public boolean equals(Object o) {

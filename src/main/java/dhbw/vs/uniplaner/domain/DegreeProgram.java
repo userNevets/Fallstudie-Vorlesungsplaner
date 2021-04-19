@@ -26,14 +26,13 @@ public class DegreeProgram implements Serializable {
     private String shortName;
 
     @OneToMany(mappedBy = "degreeProgram")
-    private Set<Course> courses;
+    private Set<Course> courses = new HashSet<>();
 
     protected DegreeProgram() {}
 
     public DegreeProgram(String name, String shortName, Set<Course> courses) {
         this.name = name;
         this.shortName = shortName;
-        //this.courses = courses;
     }
 
     public Long getDeg_id() {
@@ -60,23 +59,23 @@ public class DegreeProgram implements Serializable {
         this.shortName = shortName;
     }
 
-    // public Set<Course> getCourses() {
-    //     return this.courses;
-    // }
+    public Set<Course> getCourses() {
+        return this.courses;
+    }
 
-    // public DegreeProgram addCourse(Course course) {
-    //     this.courses.add(course);
-    //     return this;
-    // }
+    public DegreeProgram addCourse(Course course) {
+        this.courses.add(course);
+        return this;
+    }
 
-    // public DegreeProgram removeCourse(Course course) {
-    //     this.courses.remove(course);
-    //     return this;
-    // }
+    public DegreeProgram removeCourse(Course course) {
+        this.courses.remove(course);
+        return this;
+    }
 
-    // public void setCourses(Set<Course> courses) {
-    //     this.courses = courses;
-    // }
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
 
     @Override
     public boolean equals(Object o) {
