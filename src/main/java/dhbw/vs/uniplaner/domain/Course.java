@@ -21,9 +21,24 @@ public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String courseName;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    @ManyToMany
+    @JoinTable(
+        name = "course_degree",
+        joinColumns = @JoinColumn(
+            name = "course_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "degree_id",
+            referencedColumnName = "deg_id"
+        )
+    )
+    Set<DegreeProgram> degreePrograms = new HashSet<>();
 
     @OneToMany()
     @JoinTable(
