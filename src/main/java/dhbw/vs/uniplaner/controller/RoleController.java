@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,11 +32,22 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-
+    /*
+    * BadRequestException wird geworfen wenn keine Verbindung,
+    * RollenUID schon vergeben ist oder die Übergebene Rolle leer ist.
+    * */
+    
     @PostMapping("/roles")
     public ResponseEntity<Role> createRole(@RequestBody Role role) throws BadRequestException, URISyntaxException {
+        List<Role> aRoles;
+        aRoles = roleService.findAll();
+        for( Role sRole : aRoles) {
+            if(sRole.getRoleUid().equals(role.getRoleUid())){
+            throw new BadRequestException("Rolle bereits vorhanden");
+            }
+        }
         this.roleService.save(role);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity("Rolle wurde erstellt", HttpStatus.OK);
     }
 
     /**
@@ -49,17 +61,29 @@ public class RoleController {
      */
     @PutMapping("/roles")
     public ResponseEntity<Role> updateRole(@RequestBody Role role) throws  BadRequestException {
-        return null;
+        ResponseEntity<Role> returnValue = new ResponseEntity("Rollen Änderung nicht erfolgreich", HttpStatus.INTERNAL_SERVER_ERROR);
+        if(/*Abgleich mit Datenbank ob Rolle da ist*/) {
+            returnValue = new ResponseEntity("Rolle erfolgreich geändert", HttpStatus.OK);
+            
+        }else {
+            this.roleService.delete(role.getId());
+            this.roleService.save(role);
+            throw new BadRequestException("Rolle nicht im System vorhanden");
+        }
+            return returnValue;
     }
 
     @PutMapping("/roles/{id}")
     public ResponseEntity<Role> updateRole(@PathVariable(value = "id") Long id,@Valid @RequestBody Role roleDetails) throws ResourceNotFoundException {
         Optional<Role> tempRole = this.roleService.findOne(id);
-        tempRole.get().setId(roleDetails.getId());
-        tempRole.get().setRoleName(roleDetails.getRoleName());
-        tempRole.get().setRoleUid(roleDetails.getRoleName());
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        if(tempRole.isEmpty()){
+            throw new ResourceNotFoundException("Rolle mit der ID " + roleDetails.getId() + " nicht gefunden.");
+        }
+            tempRole.get().setId(roleDetails.getId());
+            tempRole.get().setRoleName(roleDetails.getRoleName());
+            tempRole.get().setRoleUid(roleDetails.getRoleUid());
+        
+        return new ResponseEntity("Rolle erfolgreich geändert", HttpStatus.OK);
     }
 
     /**
@@ -82,8 +106,8 @@ public class RoleController {
     public ResponseEntity<Role> getRole(@PathVariable Long id) throws ResourceNotFoundException {
         Optional<Role> role = this.roleService.findOne(id);
 
-        if (role.get().equals(null)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (role.get().getId() != id) {
+         throw new ResourceNotFoundException("Rolle mit der ID " + id + " nicht gefunden.");
         }
         else {
             return new ResponseEntity<>(role.get(), HttpStatus.OK);

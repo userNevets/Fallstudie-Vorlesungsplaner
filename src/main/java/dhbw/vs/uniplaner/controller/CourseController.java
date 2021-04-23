@@ -1,6 +1,7 @@
 package dhbw.vs.uniplaner.controller;
 
 import dhbw.vs.uniplaner.domain.Course;
+import dhbw.vs.uniplaner.domain.Role;
 import dhbw.vs.uniplaner.service.CourseService;
 import dhbw.vs.uniplaner.exception.BadRequestException;
 import dhbw.vs.uniplaner.exception.ResourceNotFoundException;
@@ -30,12 +31,26 @@ public class CourseController {
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
-
-
+    
+    /*
+     * BadRequestException wird geworfen wenn keine Verbindung,
+     * RollenUID schon vergeben ist oder die Übergebene Rolle leer ist.
+     * */
+    
     @PostMapping("/courses")
     public ResponseEntity<Course> createCourse(@RequestBody Course course) throws BadRequestException, URISyntaxException {
+        //this.courseService.save(course);
+        //return new ResponseEntity<>(HttpStatus.OK);
+        List<Course> aCourses;
+        aCourses = courseService.findAll();
+        for( Course sCourse : aCourses) {
+            if(sCourse.getCourseName().equals(course.getCourseName())){
+                throw new BadRequestException("Kurs bereits vorhanden");
+            }
+        }
         this.courseService.save(course);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity("Kurs wurde erfolgreich erstellt", HttpStatus.OK);
+        
     }
 
     /**
@@ -53,8 +68,6 @@ public class CourseController {
 
         Optional<Course> tempCourse  = courseService.findOne(course.getId());
         return null;
-
-
     }
 
     @PutMapping("/courses/{id}")
