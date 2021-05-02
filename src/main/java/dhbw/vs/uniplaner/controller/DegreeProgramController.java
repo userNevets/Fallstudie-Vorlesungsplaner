@@ -1,6 +1,7 @@
 package dhbw.vs.uniplaner.controller;
 
 import dhbw.vs.uniplaner.domain.DegreeProgram;
+import dhbw.vs.uniplaner.domain.Role;
 import dhbw.vs.uniplaner.service.DegreeProgramService;
 import dhbw.vs.uniplaner.exception.BadRequestException;
 import dhbw.vs.uniplaner.exception.ResourceNotFoundException;
@@ -24,18 +25,30 @@ public class DegreeProgramController {
 
     private final Logger log = LoggerFactory.getLogger(DegreeProgramController.class);
 
-    private DegreeProgramService dpServive;
+    private DegreeProgramService dpService;
 
     @Autowired
     public DegreeProgramController(DegreeProgramService deg_service) {
-        this.dpServive = deg_service;
+        this.dpService = deg_service;
     }
-
-
+    
+    /*
+     * BadRequestException wird geworfen wenn keine Verbindung,
+     * RollenUID schon vergeben ist oder die Übergebene Rolle leer ist.
+     * */
+    
+    
     @PostMapping("/degreeprograms")
     public ResponseEntity<DegreeProgram> createDegreeProgram(@RequestBody DegreeProgram degreeprogram) throws BadRequestException, URISyntaxException {
-        this.dpServive.save(degreeprogram);
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<DegreeProgram> aDegreeProgram;
+        aDegreeProgram = dpService.findAll();
+        for( DegreeProgram sDegreeProgram : aDegreeProgram) {
+            if(sDegreeProgram.getDeg_id().equals(degreeprogram.getDeg_id())){
+                throw new BadRequestException("Abschluss bereits vorhanden");
+            }
+        }
+        this.dpService.save(degreeprogram);
+        return new ResponseEntity("Abschluss wurde erstellt", HttpStatus.OK);
     }
 
     /**
@@ -47,14 +60,20 @@ public class DegreeProgramController {
      * or with status {@code 500 (Internal Server Error)} if the degreeprogram couldn't be updated.
      * @throws BadRequestException if the degreeprogram ist not valid.
      */
+    /*
     @PutMapping("/degreeprograms")
     public ResponseEntity<DegreeProgram> updateDegreeProgram(@RequestBody DegreeProgram degreeprogram) throws  BadRequestException {
         return null;
     }
+    
+     */
 
     @PutMapping("/degreeprograms/{id}")
     public ResponseEntity<DegreeProgram> updateDegreeProgram(@PathVariable(value = "id") Long id,@Valid @RequestBody DegreeProgram degreeprogramDetails) throws ResourceNotFoundException {
-        Optional<DegreeProgram> tempDegreeProgram = this.dpServive.findOne(id);
+        Optional<DegreeProgram> tempDegreeProgram = this.dpService.findOne(id);
+        if(tempDegreeProgram.isEmpty()){
+            throw new ResourceNotFoundException("Abschluss mit der ID " + degreeprogramDetails.getDeg_id() + " nicht gefunden.");
+        }
         tempDegreeProgram.get().setName(degreeprogramDetails.getName());
         tempDegreeProgram.get().setShortName(degreeprogramDetails.getShortName());
         tempDegreeProgram.get().setDeg_id(degreeprogramDetails.getDeg_id());
@@ -67,9 +86,10 @@ public class DegreeProgramController {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of degreeprograms in body.
      */
+    
     @GetMapping("/degreeprograms")
     public List<DegreeProgram> getAlldegreeprograms() {
-        return this.dpServive.findAll();
+        return this.dpService.findAll();
     }
 
     /**
@@ -80,14 +100,13 @@ public class DegreeProgramController {
      */
     @GetMapping("/degreeprograms/{id}")
     public ResponseEntity<DegreeProgram> getDegreeProgram(@PathVariable Long id) throws ResourceNotFoundException {
-        Optional<DegreeProgram> degreeProgram = this.dpServive.findOne(id);
+        Optional<DegreeProgram> degreeProgram = this.dpService.findOne(id);
 
-        if (degreeProgram.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (degreeProgram.get().getDeg_id() != id) {
+            throw new ResourceNotFoundException("Abschluss mit der ID " + id + " nicht gefunden.");
         }
         else {
-            return new ResponseEntity<DegreeProgram>(HttpStatus.OK);
-            //Hier fehlt als der Body, der mit dem Status übergegeben werden muss
+            return new ResponseEntity<>(degreeProgram.get(), HttpStatus.OK);
 
         }
     }
@@ -99,8 +118,8 @@ public class DegreeProgramController {
          */
         @DeleteMapping("/degreeprograms/{id}")
         public ResponseEntity<Void> deleteDegreeProgram(@PathVariable Long id) {
-            dpServive.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            this.dpService.delete(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
 

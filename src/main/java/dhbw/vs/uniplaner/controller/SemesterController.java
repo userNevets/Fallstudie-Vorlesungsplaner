@@ -1,5 +1,6 @@
 package dhbw.vs.uniplaner.controller;
 
+import dhbw.vs.uniplaner.domain.Role;
 import dhbw.vs.uniplaner.domain.Semester;
 import dhbw.vs.uniplaner.service.SemesterService;
 import dhbw.vs.uniplaner.exception.BadRequestException;
@@ -29,12 +30,23 @@ public class SemesterController {
     public SemesterController (SemesterService semService) {
         this.semService = semService;
     }
-
-
+    
+    /*
+     * BadRequestException wird geworfen wenn keine Verbindung,
+     * RollenUID schon vergeben ist oder die Übergebene Rolle leer ist.
+     * */
+    
     @PostMapping("/semesters")
     public ResponseEntity<Semester> createSemester(@RequestBody Semester semester) throws BadRequestException, URISyntaxException {
+        List<Semester> aSemester;
+        aSemester = semService.findAll();
+        for( Semester sSemester : aSemester) {
+            if(sSemester.getId().equals(semester.getId())){
+                throw new BadRequestException("Semester bereits vorhanden");
+            }
+        }
         this.semService.save(semester);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity("Semester wurde erstellt", HttpStatus.OK);
     }
 
     /**
@@ -46,14 +58,21 @@ public class SemesterController {
      * or with status {@code 500 (Internal Server Error)} if the semester couldn't be updated.
      * @throws BadRequestException if the semester ist not valid.
      */
+    
+    /*
     @PutMapping("/semesters")
     public ResponseEntity<Semester> updateSemester(@RequestBody Semester semester) throws  BadRequestException {
         return null;
     }
+    
+     */
 
     @PutMapping("/semesters/{id}")
     public ResponseEntity<Semester> updateSemester(@PathVariable(value = "id") Long id,@Valid @RequestBody Semester semesterDetails) throws ResourceNotFoundException {
         Optional<Semester> tempSemester = this.semService.findOne(id);
+        if(tempSemester.isEmpty()){
+            throw new ResourceNotFoundException("Rolle mit der ID " + semesterDetails.getId() + " nicht gefunden.");
+        }
         tempSemester.get().setId(semesterDetails.getId());
         tempSemester.get().setCourse(semesterDetails.getCourse());
         tempSemester.get().setStartDate(semesterDetails.getStartDate());
@@ -61,8 +80,8 @@ public class SemesterController {
         tempSemester.get().setName(semesterDetails.getName());
         tempSemester.get().setNumber(semesterDetails.getNumber());
         tempSemester.get().setSemesterNumber(semesterDetails.getSemesterNumber());
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    
+        return new ResponseEntity("Semester erfolgreich geändert", HttpStatus.OK);
     }
 
     /**
@@ -85,8 +104,8 @@ public class SemesterController {
     public ResponseEntity<Semester> getSemester(@PathVariable Long id) throws ResourceNotFoundException {
         Optional<Semester> semester =this.semService.findOne(id);
 
-        if (semester.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (semester.get().getId() != id) {
+            throw new ResourceNotFoundException("Semester mit der ID " + id + " nicht gefunden.");
         }
         else {
             return new ResponseEntity<>(semester.get(), HttpStatus.OK);

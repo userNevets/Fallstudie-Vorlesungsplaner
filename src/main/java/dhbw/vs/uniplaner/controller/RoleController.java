@@ -59,6 +59,7 @@ public class RoleController {
      * or with status {@code 500 (Internal Server Error)} if the role couldn't be updated.
      * @throws BadRequestException if the role ist not valid.
      */
+    /*
     @PutMapping("/roles")
     public ResponseEntity<Role> updateRole(@RequestBody Role role) throws  BadRequestException {
         ResponseEntity<Role> returnValue = new ResponseEntity("Rollen Änderung nicht erfolgreich", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,7 +73,9 @@ public class RoleController {
         }
             return returnValue;
     }
-
+    */
+    
+    
     @PutMapping("/roles/{id}")
     public ResponseEntity<Role> updateRole(@PathVariable(value = "id") Long id,@Valid @RequestBody Role roleDetails) throws ResourceNotFoundException {
         Optional<Role> tempRole = this.roleService.findOne(id);
