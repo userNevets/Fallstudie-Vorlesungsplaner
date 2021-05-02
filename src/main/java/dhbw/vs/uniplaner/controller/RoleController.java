@@ -62,7 +62,7 @@ public class RoleController {
     @PutMapping("/roles")
     public ResponseEntity<Role> updateRole(@RequestBody Role role) throws  BadRequestException {
         ResponseEntity<Role> returnValue = new ResponseEntity("Rollen Änderung nicht erfolgreich", HttpStatus.INTERNAL_SERVER_ERROR);
-        if(/*Abgleich mit Datenbank ob Rolle da ist*/) {
+        if(this.roleService.findOne(role.getId()).isPresent()) {
             returnValue = new ResponseEntity("Rolle erfolgreich geändert", HttpStatus.OK);
             
         }else {

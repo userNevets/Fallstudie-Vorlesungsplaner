@@ -83,14 +83,18 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- thymeleaf -->
 		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
-
-
-
+		<!-- spring security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>2.4.5</version>
+		</dependency>
 
 	</dependencies>
 
@@ -99,6 +103,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.4.3</version>
 			</plugin>
 		</plugins>
 	</build>
