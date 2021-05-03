@@ -5,9 +5,6 @@ import dhbw.vs.uniplaner.interfaces.ICourseService;
 import dhbw.vs.uniplaner.repository.CourseRepository;
 import dhbw.vs.uniplaner.domain.Course;
 
-
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -18,7 +18,11 @@
 
                     <button type="submit">Login</button>
 
-                    <div class="reg"><a href="">Registrieren</a></div>
+                    <div
+                            id="reg-link"
+                            class="reg"
+                            onclick="document.getElementById('id01').style.display='block'">
+                        <!--<a href="">-->Registrieren<!--</a>--></div>
                 </div>
             </form>
 
@@ -31,6 +35,37 @@
                     <img th:src="@{/images/dhbwlogo.svg}" src="../static/images/dhbwlogo.svg">
                 </div>
             </div>
+        </div>
+
+        <div id="id01" class="modal">
+            <span onclick=
+                "document.getElementById('id01').style.display='none'"
+                class="close"
+                title="Close Modal">&times;</span>
+
+            <form class="modal-content animate">
+                <div class="modal-container">
+                    <label>Vorname</label>
+                    <input type="text" placeholder="Vorname eingeben" name="vname" required>
+
+                    <label>Nachname</label>
+                    <input type="text" placeholder="Nachname eingeben" name="n-name" required>
+
+                    <label>E-Mail</label>
+                    <input type="text" placeholder="E-Mail eingeben" name="e-mail" required>
+
+                    <label>Passwort</label>
+                    <input type="password" placeholder="Wähle ein Passwort" name="pwd" required>
+
+                    <label>Passwort wiederholen</label>
+                    <input type="text" placeholder="Passwort wiederholem" name="pwd-wdh" required>
+
+                    <button type="submit">Registrieren</button>
+                    <button
+                            onclick="document.getElementById('id01').style.display='none'"
+                            class="cancelBtn">Abbrechen</button>
+                </div>
+            </form>
         </div>
     </body>
 </html>

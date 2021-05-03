@@ -15,6 +15,5 @@ import dhbw.vs.uniplaner.domain.Course;
 @SuppressWarnings("unused")
 public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByCourseName(String courseName);
-    
     Optional<Course> findById(Long id);
 }
