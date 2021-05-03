@@ -32,19 +32,30 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //super.configure(http);
-
         http
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-        ;
+                .permitAll();
     }
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        //super.configure(http);
+//
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/", "index", "/css/*", "/js/*")
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//        ;
+//    }
 
 //    this is for the admin
 //    @Override

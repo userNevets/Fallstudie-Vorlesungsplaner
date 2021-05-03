@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <link rel="stylesheet" href="../static/login.css">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/loginAndReg.css}" href="../static/css/loginAndReg.css">
         <meta charset="UTF-8">
         <title>Title</title>
     </head>
@@ -28,7 +28,7 @@
                     <p>Willkommen zum DHBW-Vorlesungsplaner. </br>  Ein Projekt von Manuel Klummp, Jannik Böse <br> und Steven Torkornoo auch bekannt als Steven der G.</p>
                 </div>
                 <div class="lc-img">
-                    <img src="../images/dhbwlogo.svg">
+                    <img th:src="@{/images/dhbwlogo.svg}" src="../static/images/dhbwlogo.svg">
                 </div>
             </div>
         </div>
