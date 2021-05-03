@@ -1,6 +1,7 @@
 package dhbw.vs.uniplaner.controller;
 
 import dhbw.vs.uniplaner.domain.LectureDate;
+import dhbw.vs.uniplaner.domain.Role;
 import dhbw.vs.uniplaner.service.LectureDateService;
 import dhbw.vs.uniplaner.exception.BadRequestException;
 import dhbw.vs.uniplaner.exception.ResourceNotFoundException;
@@ -30,12 +31,23 @@ public class LectureDateController {
     public LectureDateController(LectureDateService ldService) {
         this.ldService = ldService;
     }
-
+    
+    /*
+     * BadRequestException wird geworfen wenn keine Verbindung,
+     * RollenUID schon vergeben ist oder die Übergebene Rolle leer ist.
+     * */
 
     @PostMapping("/lecturedates")
     public ResponseEntity<LectureDate> createLectureDate(@RequestBody LectureDate lecturedate) throws BadRequestException, URISyntaxException {
+        List<LectureDate> aLectureDate;
+        aLectureDate = ldService.findAll();
+        for( LectureDate sLectureDate : aLectureDate) {
+            if(sLectureDate.getId().equals(lecturedate.getId())){
+                throw new BadRequestException("Es ist eine Vorlesung dort bereits vorhanden");
+            }
+        }
         this.ldService.save(lecturedate);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity("Vorlesungsdatum wurde erstellt", HttpStatus.OK);
     }
 
     /**
@@ -47,21 +59,28 @@ public class LectureDateController {
      * or with status {@code 500 (Internal Server Error)} if the lecturedate couldn't be updated.
      * @throws BadRequestException if the lecturedate ist not valid.
      */
+    
+    /*
     @PutMapping("/lecturedates")
     public ResponseEntity<LectureDate> updateLectureDate(@RequestBody LectureDate lecturedate) throws  BadRequestException {
         return null;
     }
+    
+     */
 
     @PutMapping("/lecturedates/{id}")
     public ResponseEntity<LectureDate> updateLectureDate(@PathVariable(value = "id") Long id,@Valid @RequestBody LectureDate lecturedateDetails) throws ResourceNotFoundException {
         Optional<LectureDate> tempLectureDate = this.ldService.findOne(id);
+        if(tempLectureDate.isEmpty()){
+            throw new ResourceNotFoundException("Datum mit der ID " + lecturedateDetails.getId() + " nicht gefunden.");
+        }
         tempLectureDate.get().setLecture(lecturedateDetails.getLecture());
         tempLectureDate.get().setStartDate(lecturedateDetails.getStartDate());
         tempLectureDate.get().setEndDate(lecturedateDetails.getEndDate());
         tempLectureDate.get().setLecturer(lecturedateDetails.getLecturer());
         tempLectureDate.get().setLecture(lecturedateDetails.getLecture());
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    
+        return new ResponseEntity("Datum erfolgreich geändert", HttpStatus.OK);
     }
 
     /**
@@ -84,13 +103,12 @@ public class LectureDateController {
     public ResponseEntity<LectureDate> getLectureDate(@PathVariable Long id) throws ResourceNotFoundException {
         Optional<LectureDate> lectureDate = this.ldService.findOne(id);
 
-        if (lectureDate.get().getId().equals(null)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (lectureDate.get().getId() != id) {
+            throw new ResourceNotFoundException("Datum mit der ID " + id + " nicht gefunden.");
         }
         else {
             return new ResponseEntity<>(lectureDate.get(), HttpStatus.OK);
-            // Versuch den Body hinzuzufügen, muss noch mit einer stabilen internetverbindung getestet werden
-        }
+             }
     }
         /**
          * {@code DELETE  /lecturedates/:id} : delete the "id" lecturedate.

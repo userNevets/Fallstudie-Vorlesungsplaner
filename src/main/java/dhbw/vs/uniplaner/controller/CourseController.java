@@ -62,6 +62,8 @@ public class CourseController {
      * or with status {@code 500 (Internal Server Error)} if the course couldn't be updated.
      * @throws BadRequestException if the course ist not valid.
      */
+    
+    /*
     @PutMapping("/courses")
     public ResponseEntity<Course> updateCourse(@RequestBody Course course) throws  BadRequestException {
         ResponseEntity<Course> response = null;
@@ -69,15 +71,20 @@ public class CourseController {
         Optional<Course> tempCourse  = courseService.findOne(course.getId());
         return null;
     }
+    
+     */
 
     @PutMapping("/courses/{id}")
     public ResponseEntity<Course> updateCourse(@PathVariable(value = "id") Long id,@Valid @RequestBody Course courseDetails) throws ResourceNotFoundException {
         Optional<Course> tempCourse = courseService.findOne(id);
+        if(tempCourse.isEmpty()){
+            throw new ResourceNotFoundException("Kurs mit der ID " + courseDetails.getId() + " nicht gefunden.");
+        }
         tempCourse.get().setCourseName(courseDetails.getCourseName());
         tempCourse.get().setStartDate(courseDetails.getStartDate());
         tempCourse.get().setEndDate(courseDetails.getEndDate());
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity("Kurs erfolgreich geändert", HttpStatus.OK);
     }
 
     /**
@@ -100,12 +107,12 @@ public class CourseController {
     public ResponseEntity<Course> getCourse(@PathVariable Long id) throws ResourceNotFoundException {
         Optional<Course> course = courseService.findOne(id);
 
-        if (course.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (course.get().getId() != id) {
+            throw new ResourceNotFoundException("Kurs mit der ID " + id + " nicht gefunden.");
         }
         else {
             return new ResponseEntity<>(course.get(), HttpStatus.OK);
-            //Hier fehlt der Body, der mit dem Status übergegeben werden muss
+            //Hier fehlt der Body, der mit dem Status übergegeben werden muss. ?Funktioniert doch
         }
     }
         /**

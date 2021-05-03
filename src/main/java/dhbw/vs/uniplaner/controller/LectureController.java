@@ -1,6 +1,7 @@
 package dhbw.vs.uniplaner.controller;
 
 import dhbw.vs.uniplaner.domain.Lecture;
+import dhbw.vs.uniplaner.domain.Role;
 import dhbw.vs.uniplaner.service.LectureService;
 import dhbw.vs.uniplaner.exception.BadRequestException;
 import dhbw.vs.uniplaner.exception.ResourceNotFoundException;
@@ -32,11 +33,23 @@ public class LectureController {
     public LectureController(LectureService lectureService) {
         this.lectureService = lectureService;
     }
-
+    
+    /*
+     * BadRequestException wird geworfen wenn keine Verbindung,
+     * RollenUID schon vergeben ist oder die Übergebene Rolle leer ist.
+     * */
+    
     @PostMapping("/lectures")
     public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture) throws BadRequestException, URISyntaxException {
+        List<Lecture> aLecture;
+        aLecture = lectureService.findAll();
+        for( Lecture sLecture : aLecture) {
+            if(sLecture.getLecture_id().equals(lecture.getLecture_id())){
+                throw new BadRequestException("Rolle bereits vorhanden");
+            }
+        }
         this.lectureService.save(lecture);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity("Rolle wurde erstellt", HttpStatus.OK);
     }
 
     /**
@@ -48,21 +61,27 @@ public class LectureController {
      * or with status {@code 500 (Internal Server Error)} if the lecture couldn't be updated.
      * @throws BadRequestException if the lecture ist not valid.
      */
+    /*
     @PutMapping("/lectures")
     public ResponseEntity<Lecture> updateLecture(@RequestBody Lecture lecture) throws  BadRequestException {
         return null;
     }
+    
+     */
 
     @PutMapping("/lectures/{id}")
     public ResponseEntity<Lecture> updateLecture(@PathVariable(value = "id") Long id,@Valid @RequestBody Lecture lectureDetails) throws ResourceNotFoundException {
         Optional<Lecture> tempLecture = lectureService.findOne(id);
+        if(tempLecture.isEmpty()){
+            throw new ResourceNotFoundException("Vorlesung mit der ID " + lectureDetails.getLecture_id() + " nicht gefunden.");
+        }
         tempLecture.get().setLecture_id(lectureDetails.getLecture_id());
         tempLecture.get().setLectureName(lectureDetails.getLectureName());
         tempLecture.get().setCourse(lectureDetails.getCourse());
         tempLecture.get().setDuration(lectureDetails.getDuration());
         tempLecture.get().setModulName(lectureDetails.getModulName());
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    
+        return new ResponseEntity("Vorlesung erfolgreich geändert", HttpStatus.OK);
     }
 
     /**
@@ -85,12 +104,11 @@ public class LectureController {
     public ResponseEntity<Lecture> getLecture(@PathVariable Long id) throws ResourceNotFoundException {
         Optional<Lecture> lecture = this.lectureService.findOne(id);
 
-        if (lecture.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (lecture.get().getLecture_id() != id) {
+            throw new ResourceNotFoundException("Rolle mit der ID " + id + " nicht gefunden.");
         }
         else {
-            return new ResponseEntity<>(HttpStatus.OK);
-            //Hier fehlt der Body, der mit dem Status übergeben wird
+            return new ResponseEntity<>(lecture.get(), HttpStatus.OK);
         }
     }
         

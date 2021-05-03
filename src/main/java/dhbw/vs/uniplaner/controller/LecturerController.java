@@ -1,6 +1,7 @@
 package dhbw.vs.uniplaner.controller;
 
 import dhbw.vs.uniplaner.domain.Lecturer;
+import dhbw.vs.uniplaner.domain.Role;
 import dhbw.vs.uniplaner.service.LecturerService;
 import dhbw.vs.uniplaner.exception.BadRequestException;
 import dhbw.vs.uniplaner.exception.ResourceNotFoundException;
@@ -30,12 +31,23 @@ public class LecturerController {
     public LecturerController (LecturerService lecturerService) {
         this.lecturerService = lecturerService;
     }
-
+    
+    /*
+     * BadRequestException wird geworfen wenn keine Verbindung,
+     * RollenUID schon vergeben ist oder die Übergebene Rolle leer ist.
+     * */
 
     @PostMapping("/lecturers")
     public ResponseEntity<Lecturer> createLecturer(@RequestBody Lecturer lecturer) throws BadRequestException, URISyntaxException {
+        List<Lecturer> aLecturer;
+        aLecturer = lecturerService.findAll();
+        for( Lecturer sLecturer : aLecturer) {
+            if(sLecturer.getId().equals(lecturer.getId())){
+                throw new BadRequestException("Dozent bereits vorhanden");
+            }
+        }
         this.lecturerService.save(lecturer);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity("Dozent wurde erstellt", HttpStatus.OK);
     }
 
     /**
@@ -47,19 +59,25 @@ public class LecturerController {
      * or with status {@code 500 (Internal Server Error)} if the lecturer couldn't be updated.
      * @throws BadRequestException if the lecturer ist not valid.
      */
+    /*
     @PutMapping("/lecturers")
     public ResponseEntity<Lecturer> updateLecturer(@RequestBody Lecturer lecturer) throws  BadRequestException {
         return null;
     }
+    
+     */
 
     @PutMapping("/lecturers/{id}")
     public ResponseEntity<Lecturer> updateLecturer(@PathVariable(value = "id") Long id,@Valid @RequestBody Lecturer lecturerDetails) throws ResourceNotFoundException {
         Optional<Lecturer> tempLecturer = this.lecturerService.findOne(id);
+        if(tempLecturer.isEmpty()){
+            throw new ResourceNotFoundException("Dozent mit der ID " + lecturerDetails.getId() + " nicht gefunden.");
+        }
         tempLecturer.get().setEmail(lecturerDetails.getEmail());
         tempLecturer.get().setFirstName(lecturerDetails.getFirstName());
         tempLecturer.get().setLastName(lecturerDetails.getLastName());
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    
+        return new ResponseEntity("Dozent erfolgreich geändert", HttpStatus.OK);
     }
 
     /**
@@ -82,12 +100,11 @@ public class LecturerController {
     public ResponseEntity<Lecturer> getLecturer(@PathVariable Long id) throws ResourceNotFoundException {
         Optional<Lecturer> lecturer = this.lecturerService.findOne(id);
 
-        if (lecturer.get().getId().equals(null)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (lecturer.get().getId() != id) {
+            throw new ResourceNotFoundException("Dozent mit der ID " + id + " nicht gefunden.");
         }
         else {
             return new ResponseEntity<>(lecturer.get(), HttpStatus.OK);
-            // Versuch den Body hinzuzufügen, muss noch mit einer stabilen internetverbindung getestet werden
         }
     }
         /**
