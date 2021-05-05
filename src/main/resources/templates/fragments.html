@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org", xmlns:tiles="http://www.thymeleaf.org">
+<head th:fragment="html_head">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="..\static\css\main.css">
+    <title tiles:fragment="title">Vorlesungsplaner DHBW</title>
+</head>
+<body>
+
+<nav th:fragment="sidebar">
+
+    <img src="/static/images/dhbwlogo.svg" alt="DHBW Logo" width="200px"> <!--width="150">-->
+<!--    <ul>
+        <li th:if="${currentUser == Lecturer}"><a href="#">Vorlesungtermin wählen</a></li>
+        <li th:if="${currentUser == Lecturer}"><a href="#">Vorlesungtermin ändern</a></li>
+        <li th:if="${currentUser == Lecturer}"><a href="#">Vorlesungtermin löschen</a></li>
+        <li th:if="${currentUser == Lecturer}"><a href="#">Vorlesungsplanung abschließen</a></li>
+        <li th:if="${currentUser == Admin}"><a href="#">Vorlesungsplanung starten</a></li>
+    </ul>-->
+    <ul>
+        <li><a href="#">Vorlesungtermin wählen</a></li>
+        <li><a href="#">Vorlesungtermin ändern</a></li>
+        <li><a href="#">Vorlesungtermin löschen</a></li>
+        <li><a href="#">Vorlesungsplanung abschließen</a></li>
+        <li><a href="#">Vorlesungsplanung starten</a></li>
+    </ul>
+    <div th:if="${UserDetailsService.get() != null}">
+        <form class="navbar-form navbar-down" th:action="@{/logout}" method="post">
+            <input type="submit" class="btn btn-primary" value="Logout" />
+        </form>
+        <p class="navbar-text navbar-right" th:text="${currentUser}">
+            example_user
+        </p>
+    </div>
+</nav>
+
+</body>
+</html>

@@ -11,4 +11,9 @@ public class LoginAndRegController {
     public String login() {
         return "loginAndReg";
     }
+    
+    @GetMapping("/main")
+    public String main(){
+        return "Haupt";
+    }
 }
