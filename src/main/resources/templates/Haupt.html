@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">>
 
 <!--<head th:replace="~{fragments.html :: html_head}"></head>-->
 <head th:fragment="html_head">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="..\static\css\main.css">
     <link rel="scrpit" href="..\static\js\main.js">
-    <title tiles:fragment="title">Vorlesungsplaner DHBW</title>
+<!--    <title tiles:fragment="title">Vorlesungsplaner DHBW</title>-->
+    <title>Vorlesungsplaner DHBW</title>
 
     <link href='..\static\Kalender\main.css' rel='stylesheet' />
     <script src='..\static\Kalender\main.js'></script>
@@ -28,18 +29,21 @@
 <body>
 <main>
 <nav th:fragment="sidebar">
+
     <img class="img" src="../static/images/dhbwlogo.svg" alt="DHBW Logo"/>
     <ul>
-        <li><a href="#">Vorlesungtermin wählen</a></li>
-        <li><a href="#">Vorlesungtermin ändern</a></li>
-        <li><a href="#">Vorlesungtermin löschen</a></li>
-        <li><a href="#">Vorlesungsplanung abschließen</a></li>
-        <li><a href="#">Vorlesungsplanung starten</a></li>
+        <li><a id="terminH" onclick="terminH(event)" href="#">Vorlesungtermin hinzufügen</a></li>
+        <li><a id="terminÄ" onclick="terminA(event)" href="#">Vorlesungtermin ändern</a></li>
+        <li><a id="terminL" onclick="terminL(event)" href="#">Vorlesungtermin löschen</a></li>
+        <li><a id="planA" onclick="planA(event)" href="#">Vorlesungsplanung abschließen</a></li>
+        <li><a id="planS" onclick="planS(event)" href="#">Vorlesungsplanung starten</a></li>
     </ul>
-    <div class="logout" th:if="${UserDetailsService.get() != null}">
+<!--    <div class="logout" th:if="${UserDetailsService.get() != null}">-->
+    <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
+      <!--  <div class="logout"  th:class="${isAdmin} ? admin-class : user-class "}">
         <p class="user" th:text="${currentUser}">
             example_user
-        </p>
+        </p>-->
         <form th:action="@{/logout}" method="post">
             <input type="submit" class="btn btn-primary" value="Logout" />
         </form>

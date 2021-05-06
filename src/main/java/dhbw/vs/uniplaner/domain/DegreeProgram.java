@@ -17,6 +17,7 @@ public class DegreeProgram implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="deg_id")
     private Long deg_id;
 
     @Column(name = "name")

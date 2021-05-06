@@ -21,10 +21,9 @@ public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String courseName;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
 
     @ManyToMany
     @JoinTable(
@@ -74,7 +73,7 @@ public class Course implements Serializable {
 
     public Course(){}
 
-    public Course(String courseName, LocalDate startDate, LocalDate endDate) {
+    public Course(String courseName, Date startDate, Date endDate) {
         this.courseName = courseName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -97,19 +96,19 @@ public class Course implements Serializable {
         this.courseName = courseName;
     }
 
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return this.startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return this.endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

@@ -1,6 +1,8 @@
 package dhbw.vs.uniplaner.domain;
 
 
+import dhbw.vs.uniplaner.security.Annotations.ValidEmail;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -20,14 +22,28 @@ public class UniUser implements Serializable {
     private Long id;
 
     @Column(name = "first_name")
-    private String firstName;
+    private String first_name;
 
     @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "shibboleth_id")
-    private String shibbolethId;
-
+    private String last_name;
+    
+    @ValidEmail
+    @Column(name = "email")
+    private String email;
+    
+    @Column(name = "password")
+    private String password;
+    
+    public UniUser(String first_name, String last_name, String email, String password) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.password = password;
+    }
+    public UniUser(){
+    
+    }
+    
     @ManyToMany
     @JoinTable(name = "uni_user_role",
                joinColumns = @JoinColumn(name = "uni_user_id", referencedColumnName = "id"),
@@ -43,44 +59,32 @@ public class UniUser implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getfirst_name() {
+        return first_name;
     }
 
-    public UniUser firstName(String firstName) {
-        this.firstName = firstName;
+    public UniUser first_name(String first_name) { //Doppelt? setfirst_name hat die selbe Funktion
+        this.first_name = first_name;
         return this;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setfirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getlast_name() {
+        return last_name;
     }
 
-    public UniUser lastName(String lastName) {
-        this.lastName = lastName;
+    public UniUser last_name(String last_name) {
+        this.last_name = last_name;
         return this;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setlast_name(String last_name) {
+        this.last_name = last_name;
     }
-
-    public String getShibbolethId() {
-        return shibbolethId;
-    }
-
-    public UniUser shibbolethId(String shibbolethId) {
-        this.shibbolethId = shibbolethId;
-        return this;
-    }
-
-    public void setShibbolethId(String shibbolethId) {
-        this.shibbolethId = shibbolethId;
-    }
+    
 
     public Set<Role> getRoles() {
         return roles;
@@ -102,12 +106,27 @@ public class UniUser implements Serializable {
         role.getUniUsers().remove(this);
         return this;
     }
-
+    
+    public String getPassword() {
+        return password;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
-
+    
+    public String getemail() {
+        return email;
+    }
+    
+    public void setemail(String email) {
+        this.email = email;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -129,9 +148,8 @@ public class UniUser implements Serializable {
     public String toString() {
         return "UniUser{" +
             "id=" + getId() +
-            ", firstName='" + getFirstName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", shibbolethId='" + getShibbolethId() + "'" +
+            ", first_name='" + getfirst_name() + "'" +
+            ", last_name='" + getlast_name() + "'" +
             "}";
     }
 }

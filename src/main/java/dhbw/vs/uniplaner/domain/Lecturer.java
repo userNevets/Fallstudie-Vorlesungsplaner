@@ -1,7 +1,5 @@
 package dhbw.vs.uniplaner.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -39,8 +37,7 @@ public class Lecturer implements Serializable {
         )
     )
     private Set<Lecture> lectures = new HashSet<>();
-
-
+    
     public Long getId() {
         return this.id;
     }
