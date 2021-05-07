@@ -22,6 +22,7 @@ public class Lecture implements Serializable {
     private String lectureName;
     private String modulName;
     private Long duration;
+    private Course course;
 
     @OneToMany()
     @JoinTable(
@@ -50,16 +51,13 @@ public class Lecture implements Serializable {
         )
     )
    private Set<Lecturer> lecturers;
+    
+    public Lecture() {}
 
-    private Course course;
-
-    protected Lecture() {}
-
-    public Lecture(String lectureName, String modulName, Long duratioon, Course course) {
+    public Lecture(String lectureName, String modulName, Long duratioon) {
         this.lectureName = lectureName;
         this.modulName = modulName;
         this.duration = duratioon;
-        this.course = course;
     }
 
 

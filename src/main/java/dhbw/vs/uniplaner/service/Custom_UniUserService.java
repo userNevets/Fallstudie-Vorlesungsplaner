@@ -20,12 +20,7 @@ public class Custom_UniUserService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException(email);
 		}
-		System.out.println(email);
-		System.out.println(user.toString());
-		System.out.println(user.getemail());
-		System.out.println(user.getPassword());
 		UserDetails userD = User.withUsername(user.getemail()).password(user.getPassword()).authorities("USER").build();
-		//return new Custom_UniUserDetails(user);
 		return userD;
 	}
 	

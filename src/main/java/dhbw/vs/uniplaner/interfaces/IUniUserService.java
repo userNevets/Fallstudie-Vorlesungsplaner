@@ -7,11 +7,11 @@ import java.util.Optional;
 
 public interface IUniUserService {
 
-    public UniUser save(UniUser uniUser);
+    UniUser save(UniUser uniUser);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public List<UniUser> findAll();
+    List<UniUser> findAll();
 
-    public Optional<UniUser> findOne(Long id);
+    Optional<UniUser> findOne(Long id);
 }

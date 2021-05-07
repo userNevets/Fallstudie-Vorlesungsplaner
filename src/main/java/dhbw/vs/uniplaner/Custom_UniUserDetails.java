@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class Custom_UniUserDetails  implements UserDetails {
-	private UniUser uniUser;
+	private final UniUser uniUser;
 	
 	
 	public Custom_UniUserDetails(UniUser uniUser) {

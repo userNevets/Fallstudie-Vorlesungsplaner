@@ -25,7 +25,7 @@ public class DegreeProgramController {
 
     private final Logger log = LoggerFactory.getLogger(DegreeProgramController.class);
 
-    private DegreeProgramService dpService;
+    private final DegreeProgramService dpService;
 
     @Autowired
     public DegreeProgramController(DegreeProgramService deg_service) {
@@ -50,23 +50,6 @@ public class DegreeProgramController {
         this.dpService.save(degreeprogram);
         return new ResponseEntity("Abschluss wurde erstellt", HttpStatus.OK);
     }
-
-    /**
-     * {@code PUT  /degreeprograms} : Updates an existing DegreeProgram.
-     *
-     * @param degreeprogram the degreeprogram to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated degreeprogram,
-     * or with status {@code 400 (Bad Request)} if the degreeprogram is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the degreeprogram couldn't be updated.
-     * @throws BadRequestException if the degreeprogram ist not valid.
-     */
-    /*
-    @PutMapping("/degreeprograms")
-    public ResponseEntity<DegreeProgram> updateDegreeProgram(@RequestBody DegreeProgram degreeprogram) throws  BadRequestException {
-        return null;
-    }
-    
-     */
 
     @PutMapping("/degreeprograms/{id}")
     public ResponseEntity<DegreeProgram> updateDegreeProgram(@PathVariable(value = "id") Long id,@Valid @RequestBody DegreeProgram degreeprogramDetails) throws ResourceNotFoundException {

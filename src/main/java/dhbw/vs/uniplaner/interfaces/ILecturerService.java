@@ -15,11 +15,11 @@ import java.util.Optional;
 
 public interface ILecturerService {
 
-    public Lecturer save(Lecturer lecturer);
+    Lecturer save(Lecturer lecturer);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public List<Lecturer> findAll();
+    List<Lecturer> findAll();
 
-    public Optional<Lecturer> findOne(Long id);
+    Optional<Lecturer> findOne(Long id);
 }

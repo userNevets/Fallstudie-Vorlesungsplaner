@@ -15,11 +15,11 @@ import java.util.Optional;
 
 public interface ISemesterService {
 
-    public Semester save(Semester semester);
+    Semester save(Semester semester);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public List<Semester> findAll();
+    List<Semester> findAll();
 
-    public Optional<Semester> findOne(Long id);
+    Optional<Semester> findOne(Long id);
 }

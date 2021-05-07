@@ -15,11 +15,11 @@ import java.util.Optional;
 
 public interface ICourseService {
 
-    public Course save(Course course);
+    Course save(Course course);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public List<Course> findAll();
+    List<Course> findAll();
 
-    public Optional<Course> findOne(Long id);
+    Optional<Course> findOne(Long id);
 }

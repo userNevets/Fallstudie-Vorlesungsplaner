@@ -22,11 +22,10 @@ public class LectureDate implements Serializable {
 
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-
     private Lecturer lecturer;
     private Lecture Lecture;
 
-    protected LectureDate() {}
+    public LectureDate() {}
 
     public LectureDate(LocalDateTime startDate, LocalDateTime endDate, Lecturer lecturer, Lecture lecture) {
         this.startDate = startDate;

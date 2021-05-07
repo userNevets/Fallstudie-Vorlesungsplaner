@@ -34,6 +34,7 @@ public class UniUser implements Serializable {
     @Column(name = "password")
     private String password;
     
+    
     public UniUser(String first_name, String last_name, String email, String password) {
         this.first_name = first_name;
         this.last_name = last_name;
@@ -126,6 +127,8 @@ public class UniUser implements Serializable {
     public void setemail(String email) {
         this.email = email;
     }
+    
+    
     
     @Override
     public boolean equals(Object o) {

@@ -25,7 +25,7 @@ public class CourseController {
 
     private final Logger log = LoggerFactory.getLogger(CourseController.class);
 
-    private CourseService courseService;
+    private final CourseService courseService;
 
     @Autowired
     public CourseController(CourseService courseService) {
@@ -39,8 +39,6 @@ public class CourseController {
     
     @PostMapping("/courses")
     public ResponseEntity<Course> createCourse(@RequestBody Course course) throws BadRequestException, URISyntaxException {
-        //this.courseService.save(course);
-        //return new ResponseEntity<>(HttpStatus.OK);
         List<Course> aCourses;
         aCourses = courseService.findAll();
         for( Course sCourse : aCourses) {
@@ -53,26 +51,6 @@ public class CourseController {
         
     }
 
-    /**
-     * {@code PUT  /courses} : Updates an existing Course.
-     *
-     * @param course the course to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated course,
-     * or with status {@code 400 (Bad Request)} if the course is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the course couldn't be updated.
-     * @throws BadRequestException if the course ist not valid.
-     */
-    
-    /*
-    @PutMapping("/courses")
-    public ResponseEntity<Course> updateCourse(@RequestBody Course course) throws  BadRequestException {
-        ResponseEntity<Course> response = null;
-
-        Optional<Course> tempCourse  = courseService.findOne(course.getId());
-        return null;
-    }
-    
-     */
 
     @PutMapping("/courses/{id}")
     public ResponseEntity<Course> updateCourse(@PathVariable(value = "id") Long id,@Valid @RequestBody Course courseDetails) throws ResourceNotFoundException {
@@ -112,7 +90,6 @@ public class CourseController {
         }
         else {
             return new ResponseEntity<>(course.get(), HttpStatus.OK);
-            //Hier fehlt der Body, der mit dem Status übergegeben werden muss. ?Funktioniert doch
         }
     }
         /**

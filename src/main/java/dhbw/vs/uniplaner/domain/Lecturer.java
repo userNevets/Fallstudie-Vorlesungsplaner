@@ -21,8 +21,14 @@ public class Lecturer implements Serializable {
     private String firstName;
     private String LastName;
     private String email;
-
-    // Set<LectureDate> lectureDates;
+    
+    public Lecturer(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        LastName = lastName;
+        this.email = email;
+    }
+    
+    //private Set<LectureDate> lectureDates = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -70,23 +76,23 @@ public class Lecturer implements Serializable {
         this.email = email;
     }
 
-    // public Set<LectureDate> getLectureDates() {
-    //     return this.lectureDates;
-    // }
+/*     public Set<LectureDate> getLectureDates() {
+         return this.lectureDates;
+     }
 
-    // public Lecturer addLectureDate(LectureDate lectureDate) {
-    //     this.lectureDates.add(lectureDate);
-    //     return this;
-    // }
+     public Lecturer addLectureDate(LectureDate lectureDate) {
+         this.lectureDates.add(lectureDate);
+         return this;
+     }
 
-    // public Lecturer removeLectureDate(LectureDate lectureDate) {
-    //     this.lectureDates.remove(lectureDate);
-    //     return this;
-    // }
+     public Lecturer removeLectureDate(LectureDate lectureDate) {
+         this.lectureDates.remove(lectureDate);
+         return this;
+     }
 
-    // public void setLectureDates(Set<LectureDate> lectureDates) {
-    //     this.lectureDates = lectureDates;
-    // }
+     public void setLectureDates(Set<LectureDate> lectureDates) {
+         this.lectureDates = lectureDates;
+     }*/
 
     public Lecturer addLecture(Lecture lecture) {
         this.lectures.add(lecture);

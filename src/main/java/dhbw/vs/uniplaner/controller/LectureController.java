@@ -27,7 +27,7 @@ public class LectureController {
 
     private final Logger log = LoggerFactory.getLogger(LectureController.class);
 
-    private LectureService lectureService;
+    private final LectureService lectureService;
 
     @Autowired
     public LectureController(LectureService lectureService) {
@@ -51,23 +51,7 @@ public class LectureController {
         this.lectureService.save(lecture);
         return new ResponseEntity("Rolle wurde erstellt", HttpStatus.OK);
     }
-
-    /**
-     * {@code PUT  /lectures} : Updates an existing Lecture.
-     *
-     * @param lecture the lecture to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated lecture,
-     * or with status {@code 400 (Bad Request)} if the lecture is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the lecture couldn't be updated.
-     * @throws BadRequestException if the lecture ist not valid.
-     */
-    /*
-    @PutMapping("/lectures")
-    public ResponseEntity<Lecture> updateLecture(@RequestBody Lecture lecture) throws  BadRequestException {
-        return null;
-    }
     
-     */
 
     @PutMapping("/lectures/{id}")
     public ResponseEntity<Lecture> updateLecture(@PathVariable(value = "id") Long id,@Valid @RequestBody Lecture lectureDetails) throws ResourceNotFoundException {

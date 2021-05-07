@@ -15,11 +15,11 @@ import java.util.Optional;
 
 public interface ILectureDateService {
 
-    public LectureDate save(LectureDate lecturedate);
+    LectureDate save(LectureDate lecturedate);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public List<LectureDate> findAll();
+    List<LectureDate> findAll();
 
-    public Optional<LectureDate> findOne(Long id);
+    Optional<LectureDate> findOne(Long id);
 }

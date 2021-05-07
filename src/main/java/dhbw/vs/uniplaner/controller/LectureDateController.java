@@ -25,7 +25,7 @@ public class LectureDateController {
 
     private final Logger log = LoggerFactory.getLogger(LectureDateController.class);
 
-    private LectureDateService ldService;
+    private final LectureDateService ldService;
 
     @Autowired
     public LectureDateController(LectureDateService ldService) {
@@ -49,24 +49,7 @@ public class LectureDateController {
         this.ldService.save(lecturedate);
         return new ResponseEntity("Vorlesungsdatum wurde erstellt", HttpStatus.OK);
     }
-
-    /**
-     * {@code PUT  /lecturedates} : Updates an existing LectureDate.
-     *
-     * @param lecturedate the lecturedate to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated lecturedate,
-     * or with status {@code 400 (Bad Request)} if the lecturedate is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the lecturedate couldn't be updated.
-     * @throws BadRequestException if the lecturedate ist not valid.
-     */
     
-    /*
-    @PutMapping("/lecturedates")
-    public ResponseEntity<LectureDate> updateLectureDate(@RequestBody LectureDate lecturedate) throws  BadRequestException {
-        return null;
-    }
-    
-     */
 
     @PutMapping("/lecturedates/{id}")
     public ResponseEntity<LectureDate> updateLectureDate(@PathVariable(value = "id") Long id,@Valid @RequestBody LectureDate lecturedateDetails) throws ResourceNotFoundException {

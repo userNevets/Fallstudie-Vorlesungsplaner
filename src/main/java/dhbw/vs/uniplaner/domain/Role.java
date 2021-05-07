@@ -43,7 +43,6 @@ public class Role implements Serializable {
         this.roleName = roleName;
         this.roleUid = roleUid;
         this.id = id;
-        id++;
     }
 
     public Long getId() {

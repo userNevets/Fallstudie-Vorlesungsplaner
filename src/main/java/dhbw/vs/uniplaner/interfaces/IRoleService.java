@@ -15,11 +15,11 @@ import java.util.Optional;
 
 public interface IRoleService {
 
-    public Role save(Role role);
+    Role save(Role role);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public List<Role> findAll();
+    List<Role> findAll();
 
-    public Optional<Role> findOne(Long id);
+    Optional<Role> findOne(Long id);
 }

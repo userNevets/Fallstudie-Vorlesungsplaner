@@ -1,51 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">>
+<html xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="html_head">
+<head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="..\static\css\main.css">
-    <link rel="script" href="..\static\js\main.js">
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}">
+    <link rel="script" href="/static/js/main.js" th:href="@{/js/main.js}">
     <title>Vorlesungsplaner DHBW</title>
 
-    <link href='..\static\Kalender\main.css' rel='stylesheet' />
-    <script src='..\static\Kalender\main.js'></script>
+    <link href='Kalender/main.css' rel='stylesheet' th:href="@{/Kalender/main.css}" />
+    <script src='Kalender/main.js'></script>
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'de'
+                initialView: 'dayGridMonth'
             });
-/*            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'listWeek'
-            });*/
             calendar.render();
-
         });
+
     </script>
 </head>
+
 <body>
 <main>
 <nav th:fragment="sidebar">
 
-    <img class="img" src="../static/images/dhbwlogo.svg" alt="DHBW Logo"/>
+    <img alt="DHBW Logo" class="img" src="/images/dhbwlogo.svg">
     <ul>
-        <li><a id="terminH" onclick="terminH(event)" href="#">Vorlesungtermin hinzufügen</a></li>
+       <li><a id="terminH" onclick="terminH(event)" href="#">Vorlesungtermin hinzufügen</a></li>
         <li><a id="terminÄ" onclick="terminA(event)" href="#">Vorlesungtermin ändern</a></li>
         <li><a id="terminL" onclick="terminL(event)" href="#">Vorlesungtermin löschen</a></li>
         <li><a id="planA" onclick="planA(event)" href="#">Vorlesungsplanung abschließen</a></li>
         <li><a id="planS" onclick="planS(event)" href="#">Vorlesungsplanung starten</a></li>
     </ul>
-<!--    <div class="logout" th:if="${UserDetailsService.get() != null}">-->
-    <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
-      <!--  <div class="logout"  th:class="${isAdmin} ? admin-class : user-class "}">
-        <p class="user" th:text="${currentUser}">
-            example_user
-        </p>-->
+    <div id="button">
         <form th:action="@{/logout}" method="post">
             <input type="submit" class="btn btn-primary" value="Logout" />
         </form>
-
     </div>
 </nav>
 <div class="Kalender">
@@ -54,8 +46,6 @@
     <div class="Kalender1">
     <div id='calendar1'></div>
     </div>
-<!--<nav class="sidebar" th:replace="fragments.html :: sidebar">
-</nav>-->
 </main>
 </body>
 

@@ -15,11 +15,11 @@ import java.util.Optional;
 
 public interface IDegreeProgramService {
 
-    public DegreeProgram save(DegreeProgram degreeprogram);
+    DegreeProgram save(DegreeProgram degreeprogram);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public List<DegreeProgram> findAll();
+    List<DegreeProgram> findAll();
 
-    public Optional<DegreeProgram> findOne(Long id);
+    Optional<DegreeProgram> findOne(Long id);
 }

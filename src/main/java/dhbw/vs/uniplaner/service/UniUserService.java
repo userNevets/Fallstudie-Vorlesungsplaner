@@ -28,10 +28,9 @@ public class UniUserService implements IUniUserService {
     
     
     public void Reg(UniUser user){
-        System.out.println(user.toString());
-        UniUser user2 = new UniUser(user.getfirst_name(), user.getlast_name(), user.getemail(), user.getPassword());
-        //UniUser user2 = new UniUser("Max", "Mustermann", "zoidberg315@gmail.com", "test");
-        uniUserRepository.save(user2);
+            UniUser user2 = new UniUser(user.getfirst_name(), user.getlast_name(), user.getemail(), user.getPassword());
+            uniUserRepository.save(user2);
+        
     }
 
     @Override

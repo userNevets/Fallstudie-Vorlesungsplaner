@@ -24,7 +24,7 @@ import java.util.Optional;
 public class SemesterController {
 
     private final Logger log = LoggerFactory.getLogger(SemesterController.class);
-    private SemesterService semService;
+    private final SemesterService semService;
 
     @Autowired
     public SemesterController (SemesterService semService) {
@@ -48,24 +48,7 @@ public class SemesterController {
         this.semService.save(semester);
         return new ResponseEntity("Semester wurde erstellt", HttpStatus.OK);
     }
-
-    /**
-     * {@code PUT  /semesters} : Updates an existing Semester.
-     *
-     * @param semester the semester to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated semester,
-     * or with status {@code 400 (Bad Request)} if the semester is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the semester couldn't be updated.
-     * @throws BadRequestException if the semester ist not valid.
-     */
     
-    /*
-    @PutMapping("/semesters")
-    public ResponseEntity<Semester> updateSemester(@RequestBody Semester semester) throws  BadRequestException {
-        return null;
-    }
-    
-     */
 
     @PutMapping("/semesters/{id}")
     public ResponseEntity<Semester> updateSemester(@PathVariable(value = "id") Long id,@Valid @RequestBody Semester semesterDetails) throws ResourceNotFoundException {

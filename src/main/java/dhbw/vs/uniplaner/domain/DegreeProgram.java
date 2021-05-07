@@ -31,12 +31,10 @@ public class DegreeProgram implements Serializable {
                joinColumns = @JoinColumn(name = "degree_id", referencedColumnName = "deg_id"),
                inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
     private Set<Course> courses = new HashSet<>();
-    //@OneToMany(mappedBy = "degreeProgram")
-    //private Set<Course> courses = new HashSet<>();
 
-    protected DegreeProgram() {}
+    public DegreeProgram() {}
 
-    public DegreeProgram(String name, String shortName, Set<Course> courses) {
+    public DegreeProgram(String name, String shortName) {
         this.name = name;
         this.shortName = shortName;
     }

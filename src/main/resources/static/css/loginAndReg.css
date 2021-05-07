@@ -15,7 +15,6 @@ body {
 }
 
 form {
-    /**border: 3px solid #f1f1f1**/;
     border-right: 2px solid #ccc;
 }
 
@@ -55,7 +54,6 @@ button:hover {
 }
 
 .logo-container {
-    /**border: 3px solid blue**/;
     border-left: 2px solid #ccc;
 
     width: 100%;
@@ -102,8 +100,6 @@ img {
     margin: 2% 2%;
     padding: 2%;
     border: 1px solid #888;
-    /*font-size: 35px;*/
-    /*font-weight: bold;*/
 }
 
 .close {

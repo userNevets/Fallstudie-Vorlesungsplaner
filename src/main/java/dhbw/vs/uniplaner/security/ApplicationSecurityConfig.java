@@ -50,33 +50,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-                .antMatchers("/resources/**"); //write your resource directory name
+                .antMatchers("/resources/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-/*               .authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/images/**", "/Kalender/**").permitAll()
-                .antMatchers("/main").permitAll()
-                .antMatchers("/main").hasRole("Admin")
-                .antMatchers("/main").hasRole("Dozent")*//*
-                //.anyRequest().authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                    .loginPage("/login")
-                .defaultSuccessUrl("/main")
-                    .permitAll()
-                    .and()
-                .logout().permitAll();
-                }*/
                 .authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/login", "/Reg", "/main").permitAll()
-                .antMatchers("/css/**", "/js/**", "/images/**", "/Kalender/**").permitAll()
+                .antMatchers("/login", "/Reg").permitAll()
+                .antMatchers("/browser/**").denyAll()
+                .antMatchers("/css/**", "/js/**", "/images/**", "resources/static/Kalender/**", "/resources/**").permitAll()
+                .antMatchers("/main").authenticated()
                 .anyRequest().authenticated()
-                //.anyRequest().permitAll()
                 .and()
                 .formLogin()
                     .loginPage("/login")
@@ -85,90 +70,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
+                
     
     }
-    
-    
-
-/*    @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails stevenUser = User.builder()
-                .username("steven")
-                .password(passwordEncoder.encode("password"))
-                .roles("Student") // ROLE_STUDENT
-                .build()
-        ;
-    
-        UserDetails dozentUser = User.builder()
-                .username("testdozent")
-                .password(passwordEncoder.encode("test"))
-                .roles("Dozent") // ROLE_Dozent
-                .build()
-                ;
-
-        UserDetails adminUser = User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("admin000"))
-                .roles("Admin") // ROLE_ADMIN
-                .build()
-        ;
-
-        return new InMemoryUserDetailsManager(
-                stevenUser,
-                adminUser,
-                dozentUser
-        );
-    }*/
-/*    @Bean
-    public AuthenticationSuccessHandler successHandler() {
-        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
-        handler.setUseReferer(true);
-        return handler;
-    }*/
-    //    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        //super.configure(http);
-//
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "index", "/css/*", "/js/*")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//        ;
-//    }
-
-//    this is for the admin
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        //super.configure(http);
-//
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "index", "/css/*", "/js/*")
-//                .hasRole("ROLE_ADMIN")
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin();
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        //super.configure(http);
-//
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "index", "/css/*", "/js/*", "/admin").hasRole("ROLE_ADMIN")
-//                .antMatchers("/student").hasRole("ROLE_STUDENT")
-//                .antMatchers("/dozent").hasRole("ROLE_DOZENT")
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin();
-//    }
 }

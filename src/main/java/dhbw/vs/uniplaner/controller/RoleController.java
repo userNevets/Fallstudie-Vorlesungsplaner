@@ -25,7 +25,7 @@ public class RoleController {
 
     private final Logger log = LoggerFactory.getLogger(RoleController.class);
     
-    private RoleService roleService;
+    private final RoleService roleService;
 
     @Autowired
     public RoleController(RoleService roleService) {
@@ -49,31 +49,6 @@ public class RoleController {
         this.roleService.save(role);
         return new ResponseEntity("Rolle wurde erstellt", HttpStatus.OK);
     }
-
-    /**
-     * {@code PUT  /roles} : Updates an existing Role.
-     *
-     * @param role the role to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated role,
-     * or with status {@code 400 (Bad Request)} if the role is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the role couldn't be updated.
-     * @throws BadRequestException if the role ist not valid.
-     */
-    /*
-    @PutMapping("/roles")
-    public ResponseEntity<Role> updateRole(@RequestBody Role role) throws  BadRequestException {
-        ResponseEntity<Role> returnValue = new ResponseEntity("Rollen Änderung nicht erfolgreich", HttpStatus.INTERNAL_SERVER_ERROR);
-        if(this.roleService.findOne(role.getId()).isPresent()) {
-            returnValue = new ResponseEntity("Rolle erfolgreich geändert", HttpStatus.OK);
-            
-        }else {
-            this.roleService.delete(role.getId());
-            this.roleService.save(role);
-            throw new BadRequestException("Rolle nicht im System vorhanden");
-        }
-            return returnValue;
-    }
-    */
     
     
     @PutMapping("/roles/{id}")

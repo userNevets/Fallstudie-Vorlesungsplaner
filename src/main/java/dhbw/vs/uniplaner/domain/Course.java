@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,8 +21,9 @@ public class Course implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String courseName;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private DegreeProgram degreeProgram;
 
     @ManyToMany
     @JoinTable(
@@ -32,7 +32,7 @@ public class Course implements Serializable {
             name = "course_id",
             referencedColumnName = "id"
         ),
-        inverseJoinColumns = @JoinColumn(
+            inverseJoinColumns = @JoinColumn(
             name = "degree_id",
             referencedColumnName = "deg_id"
         )
@@ -66,14 +66,10 @@ public class Course implements Serializable {
         )
     )
     Set<Semester> semesters = new HashSet<>();
-    
-    // @ManyToOne
-    // @JoinColumn(name = "id", nullable = false)
-    private DegreeProgram degreeProgram;
 
     public Course(){}
 
-    public Course(String courseName, Date startDate, Date endDate) {
+    public Course(String courseName, LocalDate startDate, LocalDate endDate) {
         this.courseName = courseName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -96,19 +92,19 @@ public class Course implements Serializable {
         this.courseName = courseName;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return this.startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return this.endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

@@ -25,7 +25,7 @@ public class LecturerController {
 
     private final Logger log = LoggerFactory.getLogger(LecturerController.class);
 
-    private LecturerService lecturerService;
+    private final LecturerService lecturerService;
 
     @Autowired
     public LecturerController (LecturerService lecturerService) {
@@ -49,23 +49,7 @@ public class LecturerController {
         this.lecturerService.save(lecturer);
         return new ResponseEntity("Dozent wurde erstellt", HttpStatus.OK);
     }
-
-    /**
-     * {@code PUT  /lecturers} : Updates an existing Lecturer.
-     *
-     * @param lecturer the lecturer to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated lecturer,
-     * or with status {@code 400 (Bad Request)} if the lecturer is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the lecturer couldn't be updated.
-     * @throws BadRequestException if the lecturer ist not valid.
-     */
-    /*
-    @PutMapping("/lecturers")
-    public ResponseEntity<Lecturer> updateLecturer(@RequestBody Lecturer lecturer) throws  BadRequestException {
-        return null;
-    }
     
-     */
 
     @PutMapping("/lecturers/{id}")
     public ResponseEntity<Lecturer> updateLecturer(@PathVariable(value = "id") Long id,@Valid @RequestBody Lecturer lecturerDetails) throws ResourceNotFoundException {
