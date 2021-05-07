@@ -47,13 +47,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-    //private final PasswordEncoder passwordEncoder;
-
-    //@Autowired
-/*    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }*/
-
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
@@ -80,13 +73,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 }*/
                 .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
+                .antMatchers("/login", "/Reg", "/main").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**", "/Kalender/**").permitAll()
-                //.anyRequest().authenticated()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
+                //.anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                //.defaultSuccessUrl("/main")
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/main")
                 .permitAll()
                 .and()
                 .logout()

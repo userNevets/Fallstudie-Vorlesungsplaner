@@ -63,7 +63,7 @@ public class UniUser implements Serializable {
         return first_name;
     }
 
-    public UniUser first_name(String first_name) { //Doppelt? setfirst_name hat die selbe Funktion
+    public UniUser first_name(String first_name) {
         this.first_name = first_name;
         return this;
     }

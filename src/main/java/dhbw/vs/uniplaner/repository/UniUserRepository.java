@@ -12,7 +12,7 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 public interface UniUserRepository extends JpaRepository<UniUser, Long> {
     //List<UniUser> findByName(String uniUserName);
-    Optional<UniUser> findById(Long id);
+   //Optional<UniUser> findById(Long id);
     @Query("SELECT n FROM UniUser n WHERE n.email = ?1")
     UniUser findByEmail(String email);
 }

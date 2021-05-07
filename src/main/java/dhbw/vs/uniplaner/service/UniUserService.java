@@ -31,9 +31,7 @@ public class UniUserService implements IUniUserService {
         System.out.println(user.toString());
         UniUser user2 = new UniUser(user.getfirst_name(), user.getlast_name(), user.getemail(), user.getPassword());
         //UniUser user2 = new UniUser("Max", "Mustermann", "zoidberg315@gmail.com", "test");
-        System.out.println(user2.toString());
         uniUserRepository.save(user2);
-        System.out.println("2");
     }
 
     @Override

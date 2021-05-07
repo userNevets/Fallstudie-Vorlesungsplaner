@@ -26,4 +26,3 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
 			return matcher.matches();
 		}
 	}
-

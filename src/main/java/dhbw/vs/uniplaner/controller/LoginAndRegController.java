@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 
@@ -25,7 +26,7 @@ public class LoginAndRegController {
 
     @GetMapping("/login")
     public String login() {
-        return "loginAndReg";
+        return "login";
     }
     
     @GetMapping("/Reg")
@@ -40,7 +41,7 @@ public class LoginAndRegController {
         System.out.println(user.toString());
         user.setPassword(pwEncoder.encode(user.getPassword()));
         uniUserService.Reg(user);
-        return "loginAndReg";
+        return "login";
     }
     
    @GetMapping("/main")

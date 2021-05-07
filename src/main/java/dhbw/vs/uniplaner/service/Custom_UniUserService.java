@@ -4,6 +4,7 @@ import dhbw.vs.uniplaner.Custom_UniUserDetails;
 import dhbw.vs.uniplaner.domain.UniUser;
 import dhbw.vs.uniplaner.repository.UniUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,10 +15,18 @@ public class Custom_UniUserService implements UserDetailsService {
 	private UniUserRepository uniUserRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-		UniUser user = uniUserRepository.findByEmail(s);
-		System.out.println(s.toString());
-		return new Custom_UniUserDetails(user);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		UniUser user = uniUserRepository.findByEmail(email);
+		if (user == null) {
+			throw new UsernameNotFoundException(email);
+		}
+		System.out.println(email);
+		System.out.println(user.toString());
+		System.out.println(user.getemail());
+		System.out.println(user.getPassword());
+		UserDetails userD = User.withUsername(user.getemail()).password(user.getPassword()).authorities("USER").build();
+		//return new Custom_UniUserDetails(user);
+		return userD;
 	}
 	
 }
