@@ -1,11 +1,8 @@
 package dhbw.vs.uniplaner.security.Annotations;
 
-
-import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
-
+import dhbw.vs.uniplaner.security.EmailValidator;
 import javax.validation.Constraint;
 import javax.validation.Payload;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
