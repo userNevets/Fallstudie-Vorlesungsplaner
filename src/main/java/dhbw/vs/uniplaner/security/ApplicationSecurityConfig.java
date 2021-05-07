@@ -66,7 +66,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 /*               .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/images/**", "/Kalender/**").permitAll()
                 .antMatchers("/main").permitAll()
-*//*                .antMatchers("/main").hasRole("Admin")
+                .antMatchers("/main").hasRole("Admin")
                 .antMatchers("/main").hasRole("Dozent")*//*
                 //.anyRequest().authenticated()
                 .anyRequest().permitAll()
@@ -80,7 +80,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 }*/
                 .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
-                //.antMatchers("/css/**", "/js/**", "/images/**", "/Kalender/**").permitAll()
+                .antMatchers("/css/**", "/js/**", "/images/**", "/Kalender/**").permitAll()
                 //.anyRequest().authenticated()
                 .anyRequest().permitAll()
                 .and()
