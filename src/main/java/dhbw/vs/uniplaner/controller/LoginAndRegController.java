@@ -4,13 +4,13 @@ import dhbw.vs.uniplaner.domain.UniUser;
 import dhbw.vs.uniplaner.service.UniUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 
@@ -19,8 +19,10 @@ public class LoginAndRegController {
     
     @Autowired
     private UniUserService uniUserService;
-    
-    
+
+    @Autowired
+    private PasswordEncoder pwEncoder;
+
     @GetMapping("/login")
     public String login() {
         return "loginAndReg";
@@ -36,8 +38,9 @@ public class LoginAndRegController {
     @ResponseBody
     public String process_reg(HttpServletRequest request, @RequestBody(required = false) @ModelAttribute("User") @Valid UniUser user) {
         System.out.println(user.toString());
-        //uniUserService.Reg(user);
-        return "/loginAndReg";
+        user.setPassword(pwEncoder.encode(user.getPassword()));
+        uniUserService.Reg(user);
+        return "loginAndReg";
     }
     
    @GetMapping("/main")
