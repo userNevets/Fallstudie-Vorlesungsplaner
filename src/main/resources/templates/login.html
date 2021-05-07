@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <link rel="stylesheet" type="text/css" th:href="@{/css/loginAndReg.css}" href="../static/css/loginAndReg.css">
         <meta charset="UTF-8">
@@ -8,57 +8,26 @@
     </head>
     <body>
         <div class="wrapper">
-&lt;!&ndash;            <form th:action="@{/login}" method="post">
+            <form th:action="@{/login}" method="post">
                 <div class="container">
                     <h2>Anmeldung</h2>
                     <label>Username</label>
-                    <input id="username" type="text" placeholder="Username eingeben" name="uname" required>
+                    <input type="email"  name="username" placeholder="E-mail">
 
                     <label>Passwort</label>
-                    <input id="password" type="password" placeholder="Passwort eingeben" name="pwd" required>
+                    <input type="password" name="password"  placeholder="Password">
 
 
-                    <button type="submit">Login</button>
-
+                    <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                     <div
                             id="reg-link"
-                            class="reg"
-                            onclick="document.getElementById('id01').style.display='block'" th:href="@{/Reg}">
-                        &lt;!&ndash;<a href="">&ndash;&gt;Registrieren&lt;!&ndash;</a>&ndash;&gt;</div>
-                </div>
-            </form>&ndash;&gt;
-
-            <div th:fragment="content">
-                <form name="f" th:action="@{/login}" method="post">
-                    <div class="container">
-                        <h2>Anmeldung</h2>
-                    <fieldset>
-                        <legend>Please Login</legend>
-                        <div th:if="${param.error}" class="alert alert-error">
-                            Invalid username and password.
-                        </div>
-                        <div th:if="${param.logout}" class="alert alert-success">
-                            You have been logged out.
-                        </div>
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username"/>
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password"/>
-                        <div class="form-actions">
-                            <button type="submit" class="btn">Log in</button>
-                        </div>
-
-                    </fieldset>
-&lt;!&ndash;                        <div    th:href="@{/Reg}"
-                                id="reg-link"
-                              class="reg"
-                              onclick="document.getElementById('id01').style.display='block'" >
-                            Registrieren
-                            <button type="button" class="btn">Registrieren </button>
-                        </div>&ndash;&gt;
+                            class="reg">
+                            <a href="" th:href="@{/Reg}">
+                                <button type="button">Registrieren</button>
+                            </a>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
 
             <div class="logo-container">
                 <div class="lc-text">
@@ -71,80 +40,58 @@
             </div>
         </div>
     </body>
-</html>-->
-
-
-
-<!--<html xmlns:th="https://www.thymeleaf.org">
-&lt;!&ndash;<head th:include="layout :: head(title=~{::title},links=~{})">&ndash;&gt;
-    <head>
-    <title>Please Login</title>
-</head>
-<body>
-<div th:fragment="content">
-    <form name="f" th:action="@{/login}" method="post">
-        <fieldset>
-            <legend>Please Login</legend>
-            <div th:if="${param.error}" class="alert alert-error">
-                Invalid username and password.
-            </div>
-            <div th:if="${param.logout}" class="alert alert-success">
-                You have been logged out.
-            </div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"/>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password"/>
-            <div class="form-actions">
-                <button type="submit" class="btn">Log in</button>
-            </div>
-        </fieldset>
-    </form>
-</div>
-</body>
-</html>-->
-
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-
-<head>
-    <meta charset="utf-8">
-</head>
-<body class="hold-transition login-page">
-<div class="login-box">
-    <div class="login-logo">
-        <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form th:action="@{/login}" method="post">
-                    <div th:if="${param.error}">
-                        <div class="alert alert-danger">
-                            Invalid username or password.
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" name="username" placeholder="Email">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                </form>
-</body>
 </html>
+
+
+
+
+<!--<html-->
+<!--        xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--    <head>-->
+<!--        <meta charset="utf-8">-->
+<!--        <link rel="stylesheet" type="text/css" th:href="@{/css/loginAndReg.css}" href="../static/css/loginAndReg.css">-->
+<!--        <title>Registration</title>-->
+<!--    </head>-->
+<!--    <body>-->
+<!--        <div class="login-box">-->
+<!--            <div class="login-logo">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-body login-card-body">-->
+<!--                        <p class="login-box-msg">Sign in to start your session</p>-->
+<!--                        <form th:action="@{/login}" method="post">-->
+<!--                            <div th:if="${param.error}">-->
+<!--                                <div class="alert alert-danger">-->
+<!--                                    Invalid username or password.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="input-group mb-3">-->
+<!--                                <input type="email" class="form-control" name="username" placeholder="Email">-->
+<!--                                <div class="input-group-append">-->
+<!--                                    <div class="input-group-text">-->
+<!--                                        <span class="fas fa-envelope"></span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="input-group mb-3">-->
+<!--                                <input type="password" name="password" class="form-control" placeholder="Password">-->
+<!--                                <div class="input-group-append">-->
+<!--                                    <div class="input-group-text">-->
+<!--                                        <span class="fas fa-lock"></span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                            <div class="row">-->
+<!--                                <div class="col-4">-->
+<!--                                    <button type="submit" class="btn btn-primary btn-block">Sign In</button>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; /.col &ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </body>-->
+<!--</html>-->
 

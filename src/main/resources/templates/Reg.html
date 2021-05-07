@@ -8,11 +8,6 @@
     </head>
     <body>
         <div id="id01" class="modal">
-            <!--<span onclick=
-                "document.getElementById('id01').style.display='none'"
-                class="close"
-                title="Close Modal">&times;</span>-->
-
             <form th:action="@{/process_reg}" th:object="${User}" class="modal-content animate" method="post" enctype="utf8">
                 <div class="modal-container">
                     <label>Vorname</label>
@@ -31,9 +26,9 @@
                     <input type="text" placeholder="Passwort wiederholen" name="pwd-wdh" required>
 
                     <button type="submit" >Registrieren</button>
-                    <button
-                            onclick="document.getElementById('id01').style.display='none'"
-                            class="cancelBtn">Abbrechen</button>
+                    <a th:href="@{/login}">
+                        <button  class="cancelBtn" type="button">Abbrechen</button>
+                    </a>
                 </div>
             </form>
         </div>
