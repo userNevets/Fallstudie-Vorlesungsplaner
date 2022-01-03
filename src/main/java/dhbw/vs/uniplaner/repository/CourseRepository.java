@@ -1,6 +1,7 @@
 package dhbw.vs.uniplaner.repository;
 
 
+import dhbw.vs.uniplaner.domain.UniUser;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -14,7 +15,8 @@ import dhbw.vs.uniplaner.domain.Course;
 @Repository
 @SuppressWarnings("unused")
 public interface CourseRepository extends JpaRepository<Course, Long> {
-    List<Course> findByCourseName(String courseName);
-    
-    Optional<Course> findById(Long id);
+    @Query("SELECT n FROM Course n WHERE n.courseName = ?1")
+    Course findByName(String name);
+    @Query("SELECT n FROM Course n WHERE n.id = ?1")
+    Course findByid(Long id);
 }

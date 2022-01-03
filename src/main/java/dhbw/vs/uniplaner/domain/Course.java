@@ -20,13 +20,14 @@ public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "deg_id")
     private Long id;
     
-    @Column(name = "course name")
+    @Column(name = "course_name")
     private String courseName;
-    @Column(name = "start date")
+    @Column(name = "start_date")
     private LocalDate startDate;
-    @Column(name = "end date")
+    @Column(name = "end_date")
     private LocalDate endDate;
     
     @ManyToOne
